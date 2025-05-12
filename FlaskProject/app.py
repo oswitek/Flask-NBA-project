@@ -30,6 +30,8 @@ def index():
         home_team_name = teams.find_team_name_by_id(home_team_id)['full_name']
         away_team_name = teams.find_team_name_by_id(away_team_id)['full_name']
 
+        ###TEST
+
         game_data = {
             'home_team_logo': home_team_logo,
             'home_team': home_team_name,
