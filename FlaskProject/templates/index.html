@@ -6,6 +6,7 @@
 </head>
 <body>
     <h1>Today's NBA Games</h1>
+
     {% for game in today_games_html %}
         <div>
             <h2>
@@ -16,6 +17,8 @@
             <p>Place: {{ game.game_place }}</p>
             {% if game.game_time %}
                 <p>Time: {{ game.game_time }}</p>
+            {% else %}
+                <p>No time aligned</p>
             {% endif %}
             {% if game.odds %}
                 <p>Booker: {{ game.odds.booker_name }}</p>

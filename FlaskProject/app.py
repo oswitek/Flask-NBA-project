@@ -65,6 +65,8 @@ def index():
 
         today_games_list.append(game_data)
 
+        #Dodać jeszcze najlepszy gracz z najlepszym graczem porównanie z endpointa playervsplayer i trzeba też najlepszego gracza danego teamu wyszukać i porównywać między sobą np pod kątem kto ma więcej punktów zdobytych itp.
+
     return render_template('index.html', today_games_html=today_games_list)
 
 #@app.route('/players')
