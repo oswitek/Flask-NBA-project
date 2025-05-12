@@ -21,7 +21,7 @@ def index():
     for game in today_games:
         game_status_id = game[3]  # gdzie jest status 1 = scheduled 2 = trwa 3 = end
         home_team_id = game[6]
-        home_team_logo = "https://cdn.nba.com/logos/nba/{}/global/L/logo.svg".format(home_team_id)
+        home_team_logo = "https://cdn.nba.com/logos/nba/{}/global/L/logo.svg".format(home_team_id) #loga z osobnej stronki (W pelni sie zgadzają z ID druzyn nba_api) bo w api nie bylo log
         away_team_id = game[7]
         away_team_logo = "https://cdn.nba.com/logos/nba/{}/global/L/logo.svg".format(away_team_id)
         game_time = game[4] if game_status_id != 2 else None  # gra trwa to nie wliczać
@@ -30,8 +30,7 @@ def index():
         home_team_name = teams.find_team_name_by_id(home_team_id)['full_name']
         away_team_name = teams.find_team_name_by_id(away_team_id)['full_name']
 
-        ###TEST
-
+        #Każdy 1 mecz ma taką postać
         game_data = {
             'home_team_logo': home_team_logo,
             'home_team': home_team_name,
@@ -42,12 +41,10 @@ def index():
             'odds': None
         }
 
-        matching_odds = next(
-            (g for g in odds_games if g['homeTeamId'] == str(home_team_id) and g['awayTeamId'] == str(away_team_id)),
-            None)  # znajduje rekord gdzie te teamy sie spotykaja
+        match_odds = next((g for g in odds_games if g['homeTeamId'] == str(home_team_id) and g['awayTeamId'] == str(away_team_id)), None)
 
-        if matching_odds:
-            two_way_market = next((m for m in matching_odds['markets'] if m['name'] == '2way'), None)
+        if match_odds:
+            two_way_market = next((m for m in match_odds['markets'] if m['name'] == '2way'), None)
 
             if two_way_market and two_way_market['books']:
                 booker = two_way_market['books'][0]
@@ -69,6 +66,12 @@ def index():
         today_games_list.append(game_data)
 
     return render_template('index.html', today_games_html=today_games_list)
+
+#@app.route('/players')
+#def players():
+#
+#    return render_template('players.html', )
+
 
 if __name__ == '__main__':
     app.run(debug=True, port=8000)
