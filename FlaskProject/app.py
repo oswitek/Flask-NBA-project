@@ -30,12 +30,29 @@ def index():
         home_team_name = teams.find_team_name_by_id(home_team_id)['full_name']
         away_team_name = teams.find_team_name_by_id(away_team_id)['full_name']
 
+        #best_home_player = None
+        #best_away_player = None
+        #home_players = endpoints.CommonTeamRoster(team_id=home_team_id, season=game[8]).get_data_frames()[0]
+        #away_players = endpoints.CommonTeamRoster(team_id=away_team_id, season=game[8]).get_data_frames()[0]
+
+        #print(home_players)
+
+        #current_points = 0
+        #most_points = 0
+
+        #for player_id in home_players['PLAYER_ID']:
+        #    player_points = endpoints.PlayerCareerStats(player_id=player_id)
+
+
+
         #Każdy 1 mecz ma taką postać
         game_data = {
             'home_team_logo': home_team_logo,
             'home_team': home_team_name,
+            #'best_home_player': best_home_player,
             'away_team_logo': away_team_logo,
             'away_team': away_team_name,
+            #'best_away_player': best_away_player,
             'game_time': game_time,
             'game_place': game_place,
             'odds': None
@@ -67,7 +84,8 @@ def index():
 
         #Dodać jeszcze najlepszy gracz z najlepszym graczem porównanie z endpointa playervsplayer i trzeba też najlepszego gracza danego teamu wyszukać i porównywać między sobą np pod kątem kto ma więcej punktów zdobytych itp.
 
-    return render_template('index.html', today_games_html=today_games_list)
+
+    return render_template('index.html', today_games_html=today_games_list) #trzeba bedzie dodać jeszcze jako parametr przekazywanytych zawodników w liście ze statami
 
 #@app.route('/players')
 #def players():
