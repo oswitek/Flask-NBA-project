@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>NBA Games</title>
+</head>
+<body>
+    <h1>Today's NBA Games</h1>
+    {% for game in today_games_html %}
+        <div>
+            <h2>
+                <img src="{{ game.away_team_logo }}" width="40" style="vertical-align: middle;">
+                {{ game.away_team }} VS {{ game.home_team }}
+                <img src="{{ game.home_team_logo }}" width="40" style="vertical-align: middle;">
+            </h2>
+            <p>Place: {{ game.game_place }}</p>
+            {% if game.game_time %}
+                <p>Time: {{ game.game_time }}</p>
+            {% endif %}
+            {% if game.odds %}
+                <p>Booker: {{ game.odds.booker_name }}</p>
+                <ul>
+                    {% for outcome in game.odds.outcomes %}
+                        <li>{{ outcome.team }} - Odds: {{ outcome.odds }} (Trend: {{ outcome.trend }})</li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <p>No odds available</p>
+            {% endif %}
+        </div>
+        <hr>
+    {% endfor %}
+</body>
+</html>
