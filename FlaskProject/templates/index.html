@@ -10,13 +10,13 @@
     {% for game in today_games_html %}
         <div>
             <h2>
-                <img src="{{ game.away_team_logo }}" width="40" style="vertical-align: middle">
-                {{ game.away_team }} VS {{ game.home_team }}
                 <img src="{{ game.home_team_logo }}" width="40" style="vertical-align: middle">
+                {{ game.home_team }} VS {{ game.away_team }}
+                <img src="{{ game.away_team_logo }}" width="40" style="vertical-align: middle">
             </h2>
             <p>Place: {{ game.game_place }}</p>
             {% if game.game_time %}
-                <p>Time: {{ game.game_time }}</p>
+                <p>{{ game.game_time }}</p>
             {% else %}
                 <p>No time aligned</p>
             {% endif %}
