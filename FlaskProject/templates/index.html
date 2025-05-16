@@ -20,6 +20,12 @@
             {% else %}
                 <p>No time aligned</p>
             {% endif %}
+            {% if game.best_home_player and game.best_away_player %}
+                <p>{{ game.best_home_player.player_name }} - {{ game.best_away_player.player_name }}</p>
+                <p>PPG: {{ game.best_home_player.points_per_game }} - PPG: {{ game.best_away_player.points_per_game }}</p>
+            {% else %}
+                <p>No players to match</p>
+            {% endif %}
             {% if game.odds %}
                 <p>Booker: {{ game.odds.booker_name }}</p>
                 <ul>

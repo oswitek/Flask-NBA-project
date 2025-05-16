@@ -74,6 +74,7 @@ def index():
                 most_home_points = current_points
                 points_per_game = most_home_points / len(player_last_10_games)
                 player_name = top_home_players.loc[top_home_players['PLAYER_ID'] == player_id]['PLAYER_NAME'].iloc[0]
+                # trzeba dodać jeszcze zdj gracza
                 best_home_player = {
                     'player_name' : player_name,
                     'points_per_game' : points_per_game,
@@ -87,6 +88,7 @@ def index():
                 most_away_points = current_points
                 points_per_game = most_away_points / len(player_last_10_games)
                 player_name = top_away_players.loc[top_away_players['PLAYER_ID'] == player_id]['PLAYER_NAME'].iloc[0]
+                #trzeba dodać jeszcze zdj gracza
                 best_away_player = {
                     'player_name': player_name,
                     'points_per_game': points_per_game,
