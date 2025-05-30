@@ -1,7 +1,7 @@
 from nba_api.stats import endpoints
-from nba_api.stats.static import teams
+from nba_api.stats.static import teams, players
 from nba_api.live.nba.endpoints import odds as team_odds
-from flask import Flask, render_template
+from flask import Flask, render_template, request
 from datetime import datetime
 import time
 from pytz import timezone
@@ -11,8 +11,9 @@ app = Flask(__name__)
 
 @app.route('/')
 def index():
+
     today_date = datetime.today().strftime('%Y-%m-%d')
-    #today_date = "2025-05-18"
+    #today_date = "2025-05-18" #Testowo jak chcecie sobie sprawdzić jakiś dzień to zakomentujcie linijkę wyżej i wpiszcie datę tutaj i odkomentujcie to -> ctr-s i reload stronki
     scoreboard = endpoints.ScoreboardV2(game_date=today_date) #W game[4] pamietajcie ze jest zwracany format STRING a nie datetime
     today_games = scoreboard.game_header.get_dict()['data']
     #print(today_games)
@@ -25,6 +26,7 @@ def index():
     all_players = endpoints.LeagueDashPlayerStats().get_data_frames()[0]
     #print(all_players)
 
+    #Dla każdej gry w grach rozgrywanych danego dnia pobieramy ID meczu, id drużyn, loga drużyn oraz typujemy najlepszych graczy i oddsy bukmacherów na daną drużynę.
     for game in today_games:
         game_status_id = game[3]  # gdzie jest status 1 = scheduled 2 = trwa 3 = end
         home_team_id = game[6]
@@ -58,7 +60,7 @@ def index():
         home_team_name = teams.find_team_name_by_id(home_team_id)['full_name']
         away_team_name = teams.find_team_name_by_id(away_team_id)['full_name']
 
-        #Trzeba bylo dodać żeby tylko 8 najlepszych przeliczalo bo za duzo zapytan i wysypuje (bierzemy se pod uwage tylko 8 zawodników z najwiekszym czasem gry w minutach)
+        #Trzeba bylo dodać żeby tylko 8 najlepszych przeliczalo bo za duzo zapytan przy zawodnikach z całej drużyny i wysypuje (bierzemy se pod uwage tylko 8 zawodników z najwiekszym czasem gry w minutach - taki core zespołu)
         top_home_players = all_players[all_players['TEAM_ID'] == home_team_id].sort_values(by=['MIN'], ascending=False).head(8)
         top_away_players = all_players[all_players['TEAM_ID'] == away_team_id].sort_values(by=['MIN'], ascending=False).head(8)
 
@@ -74,9 +76,10 @@ def index():
                 most_home_points = current_points
                 points_per_game = most_home_points / len(player_last_10_games)
                 player_name = top_home_players.loc[top_home_players['PLAYER_ID'] == player_id]['PLAYER_NAME'].iloc[0]
-                # trzeba dodać jeszcze zdj gracza
+                player_photo = "https://cdn.nba.com/headshots/nba/latest/1040x760/{}.png".format(player_id)
                 best_home_player = {
                     'player_name' : player_name,
+                    'player_photo': player_photo,
                     'points_per_game' : points_per_game,
                 }
             time.sleep(0.4)
@@ -88,9 +91,10 @@ def index():
                 most_away_points = current_points
                 points_per_game = most_away_points / len(player_last_10_games)
                 player_name = top_away_players.loc[top_away_players['PLAYER_ID'] == player_id]['PLAYER_NAME'].iloc[0]
-                #trzeba dodać jeszcze zdj gracza
+                player_photo = "https://cdn.nba.com/headshots/nba/latest/1040x760/{}.png".format(player_id)
                 best_away_player = {
                     'player_name': player_name,
+                    'player_photo': player_photo,
                     'points_per_game': points_per_game,
                 }
             time.sleep(0.4)
@@ -111,6 +115,7 @@ def index():
             'odds': None
         }
 
+        #Match oddsy dla każdej drużyny
         match_odds = next((g for g in odds_games if g['homeTeamId'] == str(home_team_id) and g['awayTeamId'] == str(away_team_id)), None)
 
         if match_odds:
@@ -136,15 +141,42 @@ def index():
         today_games_list.append(game_data)
         time.sleep(0.4)
 
-        #Dodać jeszcze najlepszy gracz z najlepszym graczem porównanie z endpointa playervsplayer i trzeba też najlepszego gracza danego teamu wyszukać i porównywać między sobą np pod kątem kto ma więcej punktów zdobytych w tym sezonie itp.
-
 
     return render_template('index.html', today_games_html=today_games_list)
 
-#@app.route('/players')
-#def players():
-#
-#    return render_template('players.html', )
+@app.route('/players', methods=['GET'])
+def players_search():
+    player_name = request.args.get('player_name', '')
+    #player_name = "Jordan"
+
+    found_players_by_name = []
+    players_list = []
+
+    if player_name:
+        found_players_by_name = players.find_players_by_full_name(player_name)
+
+        for searched_player in found_players_by_name:
+            player_id = searched_player['id']
+            player_full_name = searched_player['full_name']
+            stats = endpoints.PlayerCareerStats(player_id=player_id)
+            career_df = stats.get_data_frames()[0]
+
+            if not career_df.empty:
+                latest_known_season = career_df.iloc[-1]
+                players_list.append({
+                    'name': player_full_name,
+                    'player_id': player_id,
+                    'team': latest_known_season['TEAM_ABBREVIATION'],
+                    'season': latest_known_season['SEASON_ID'],
+                    'games': latest_known_season['GP'],
+                    'points': latest_known_season['PTS'],
+                    'rebounds': latest_known_season['REB'],
+                    'assists': latest_known_season['AST'],
+                    'photo': "https://cdn.nba.com/headshots/nba/latest/1040x760/{}.png".format(player_id)
+                })
+            time.sleep(0.4)
+
+    return render_template('players.html', players=players_list, player_name=player_name)
 
 
 if __name__ == '__main__':

@@ -1,0 +1,49 @@
+.team-logo {
+    width: 40px;
+    vertical-align: middle;
+}
+
+.game-header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.game-info {
+    font-size: 14px;
+    color: #444;
+    text-align: center;
+}
+
+.player-info {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 40px;
+    margin: 20px 0;
+}
+
+.player-column {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.player-photo {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 5px;
+}
+
+.player-text {
+    text-align: center;
+    font-size: 14px;
+}
+
+.vs-text {
+    font-weight: bold;
+    font-size: 18px;
+}

@@ -2,9 +2,29 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <title>NBA Games</title>
 </head>
 <body>
+    <h1>Search for the Player</h1>
 
+    <form method="get" action="{{ url_for('players_search') }}">
+        <input type="text" name="player_name" placeholder="Enter player name..." value="{{ player_name }}">
+        <button type="submit">Search</button>
+    </form>
+
+    {% if players %}
+        <ul>
+            {% for player in players %}
+            <li>
+                <img class="player-photo" src="{{ player.photo }}">
+                <strong>{{ player.name }}</strong><br>
+                Team: {{ player.team }} | Season: {{ player.season }}<br>
+                GP: {{ player.games }}, PTS: {{ player.points }}, REB: {{ player.rebounds }}, AST: {{ player.assists }}
+            </li>
+            {% endfor %}
+        </ul>
+    {% elif player_name %}
+        <p>No players found for the: "{{ player_name }}"</p>
+    {% endif %}
 </body>
-</html>
