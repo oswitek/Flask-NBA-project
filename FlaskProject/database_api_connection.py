@@ -1,3 +1,4 @@
+import os
 from nba_api.stats import endpoints
 from nba_api.stats.static import teams, players
 from sqlalchemy import create_engine
@@ -7,10 +8,13 @@ import datetime
 import time
 import pandas as pd
 import traceback
+from dotenv import load_dotenv
 
 
-DATABASE_URL = "postgresql://postgres:belzebub1337@localhost:5432/nba_database"
-engine = create_engine(DATABASE_URL)
+load_dotenv()
+DATABASE_URL = os.getenv('DATABASE_URL')
+engine = create_engine(DATABASE_URL, connect_args={'client_encoding': 'utf8'})
+
 Session = sessionmaker(bind=engine)
 
 
