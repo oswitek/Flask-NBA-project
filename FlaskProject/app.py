@@ -9,12 +9,17 @@ app = Flask(__name__)
 @app.route('/')
 def index():
     today_date = datetime.today().strftime('%Y-%m-%d')
-
-    fetch_today_games_to_db(today_date)
-
+    today_games = None
 
 
-    return render_template('index.html')#, games=today_games)
+    try:
+        today_games = fetch_today_games_to_db(today_date)
+
+    except Exception as e:
+        print("Wystąpił błąd przy fetch_today_games_to_db", e)
+
+
+    return render_template('index.html', games=today_games)
 
 if __name__ == '__main__':
     app.run(debug=True, port=8000)
