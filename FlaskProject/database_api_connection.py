@@ -19,8 +19,18 @@ Session = sessionmaker(bind=engine)
 
 
 def create_tables():
-    Base.metadata.create_all(bind=engine)
+    try:
+        Base.metadata.create_all(bind=engine)
+        print("Udało się utworzyć tabele")
+    except Exception as e:
+        print("Błąd przy tworzeniu tabel:\n", e)
 
+def drop_tables():
+    try:
+        Base.metadata.drop_all(bind=engine)
+        print("Udało się usunąć tabele")
+    except Exception as e:
+        print("Błąd przy usuwaniu tabel:\n", e)
 
 def get_today_games_from_db(today_date_var):
     session = Session()
@@ -54,13 +64,55 @@ def fetch_today_games_to_db(today_date_var):
                 away_team_name = teams.find_team_name_by_id(game[7])['full_name']
                 #print("2 pass")
 
+                all_players, players_ids = get_all_players_from_db()
+
+                top_home_player_fullname = None
+                top_home_player_country = None
+                top_home_player_position = None
+                top_home_player_points_per_game = 0.0
+                top_home_player_photo_URL = None
+
+                top_away_player_fullname = None
+                top_away_player_country = None
+                top_away_player_position = None
+                top_away_player_points_per_game = 0.0
+                top_away_player_photo_URL = None
+
+                home_player_most_points = 0
+                away_player_most_points = 0
+
+                for player in all_players:
+
+                    if player.is_active == True and player.last_10_games_minutes is not None:
+
+                        if player.current_team == home_team_name:
+                            home_player_points = player.last_10_games_points
+
+                            if home_player_points > home_player_most_points:
+                                home_player_most_points = home_player_points
+                                player_last_10_games_count = player.last_10_games_count
+
+                                top_home_player_points_per_game = home_player_points / player_last_10_games_count
+                                top_home_player_fullname = f"{player.first_name} {player.last_name}"
+                                top_home_player_country = player.country
+                                top_home_player_position = player.position
+                                top_home_player_photo_URL = "https://cdn.nba.com/headshots/nba/latest/1040x760/{}.png".format(player.player_id)
 
 
+                        elif player.current_team == away_team_name:
+                            away_player_points = player.last_10_games_points
 
+                            if away_player_points > away_player_most_points:
+                                away_player_most_points = away_player_points
+                                player_last_10_games_count = player.last_10_games_count
 
+                                top_away_player_points_per_game = away_player_points / player_last_10_games_count
+                                top_away_player_fullname = f"{player.first_name} {player.last_name}"
+                                top_away_player_country = player.country
+                                top_away_player_position = player.position
+                                top_away_player_photo_URL = "https://cdn.nba.com/headshots/nba/latest/1040x760/{}.png".format(player.player_id)
 
-
-
+                # print("3 pass")
                 db_game = TodayGames(
                     game_id = game[2],
                     game_date_est = game[0],
@@ -73,10 +125,23 @@ def fetch_today_games_to_db(today_date_var):
                     away_team_logo_URL = "https://cdn.nba.com/logos/nba/{}/global/L/logo.svg".format(game[7]),
                     game_status_id = game[3],
                     game_status_text = game[4],
-                    arena_name = game[15]
+                    arena_name = game[15],
+
+                    top_home_player_fullname = top_home_player_fullname,
+                    top_home_player_country = str(top_home_player_country),
+                    top_home_player_position = str(top_home_player_position),
+                    top_home_player_points_per_game = float(top_home_player_points_per_game),
+                    top_home_player_photo_URL = top_home_player_photo_URL,
+
+                    top_away_player_fullname = top_away_player_fullname,
+                    top_away_player_country = str(top_away_player_country),
+                    top_away_player_position = str(top_away_player_position),
+                    top_away_player_points_per_game = float(top_away_player_points_per_game),
+                    top_away_player_photo_URL = top_away_player_photo_URL
                 )
 
                 session.add(db_game)
+                #print("4 pass")
 
             session.commit()
 
@@ -95,6 +160,8 @@ def fetch_all_players_to_db():
     all_players_api = players.get_players()
     _, all_players_ids = get_all_players_from_db()
 
+    insert_counter = 0
+
     try:
         for player in all_players_api:
             player_id = player['id']
@@ -102,8 +169,7 @@ def fetch_all_players_to_db():
             if player_id in all_players_ids:
                 continue
 
-            # Domyślne wartości statystyk (None)
-            last_season_id = None
+            #Domyślne wartości statystyk (None) jakby któryś gracz nmie miał danych
             whole_season = None
             last_10_games_shots_acc = None
             last_10_games_points = None
@@ -112,6 +178,10 @@ def fetch_all_players_to_db():
             last_10_games_wins = None
             last_10_games_assists = None
             last_season_games_played = None
+            player_last_10_games_count = None
+            team_name = None
+            height_cm = None
+            weight_kg = None
 
             try:
 
@@ -125,6 +195,7 @@ def fetch_all_players_to_db():
                         whole_season = f"{season_start_year}-{season_end_year}"
 
                         player_last_10_games = player_stats.head(10)
+                        player_last_10_games_count = len(player_last_10_games)
                         fga = player_last_10_games['FGA'].sum()
                         last_10_games_shots_acc = round(player_last_10_games['FGM'].sum() / fga, 2) if fga else 0.0
                         last_10_games_points = player_last_10_games['PTS'].sum()
@@ -134,9 +205,9 @@ def fetch_all_players_to_db():
                         last_10_games_assists = player_last_10_games['AST'].sum()
                         last_season_games_played = player_stats[player_stats['SEASON_ID'] == last_season_id].shape[0]
                 except Exception:
-                    pass  # Brak danych meczowych — zostaną None
+                    pass
 
-                # Dane osobowe
+                #Dane osobowe
                 player_info_df = endpoints.commonplayerinfo.CommonPlayerInfo(player_id=player_id).get_data_frames()[0]
 
                 birthdate = pd.to_datetime(player_info_df['BIRTHDATE'].iloc[0]).date()
@@ -147,14 +218,12 @@ def fetch_all_players_to_db():
                     height_cm = round(feet * 30.48 + inches * 2.54, 2)
 
                 except Exception:
-                    height_cm = None
                     pass
 
                 try:
                     weight_kg = round(float(player_info_df['WEIGHT'].iloc[0]) * 0.45359237, 2)
 
                 except Exception:
-                    weight_kg = None
                     pass
 
                 jersey = player_info_df['JERSEY'].iloc[0]
@@ -162,33 +231,48 @@ def fetch_all_players_to_db():
 
                 position = player_info_df['POSITION'].iloc[0]
                 country = player_info_df['COUNTRY'].iloc[0]
-                team_name = player_info_df['TEAM_NAME'].iloc[0] or None
+
+                try:
+                    if 'TEAM_ID' in player_info_df.columns:
+                        team_id = player_info_df['TEAM_ID'].iloc[0]
+                        if pd.notna(team_id):
+                            team_info = teams.find_team_name_by_id(team_id)
+                            if team_info and 'full_name' in team_info:
+                                team_name = team_info['full_name']
+                                #print("Team: " + team_name)
+                except Exception as e:
+                    team_name = None
+                    print("Nie udało się pobrać pełnej nazwy drużyny:\n", e)
 
                 player_record = AllPlayers(
-                    player_id=int(player_id),
-                    first_name=player['first_name'],
-                    last_name=player['last_name'],
-                    age=int(age_years) if age_years is not None else None,
-                    height=float(height_cm) if height_cm is not None else None,
-                    weight=float(weight_kg) if weight_kg is not None else None,
-                    jersey_nr=int(jersey_nr) if jersey_nr is not None else None,
-                    current_team=team_name,
-                    position=position,
-                    country=country,
-                    last_season=whole_season,
-                    ls_games_played=int(last_season_games_played) if last_season_games_played is not None else None,
-                    last_10_games_wins=int(last_10_games_wins) if last_10_games_wins is not None else None,
-                    last_10_games_losses=int(last_10_games_losses) if last_10_games_losses is not None else None,
-                    last_10_games_points=int(last_10_games_points) if last_10_games_points is not None else None,
-                    last_10_games_assists=int(last_10_games_assists) if last_10_games_assists is not None else None,
-                    last_10_games_minutes=float(last_10_games_minutes) if last_10_games_minutes is not None else None,
-                    last_10_games_shots_acc=float(last_10_games_shots_acc) if last_10_games_shots_acc is not None else None,
-                    is_active=bool(player['is_active']),
+                    player_id = int(player_id),
+                    first_name = player['first_name'],
+                    last_name = player['last_name'],
+                    age = int(age_years) if age_years is not None else None,
+                    height = float(height_cm) if height_cm is not None else None,
+                    weight = float(weight_kg) if weight_kg is not None else None,
+                    jersey_nr = int(jersey_nr) if jersey_nr is not None else None,
+                    current_team = team_name,
+                    position = position,
+                    country = country,
+                    last_season = whole_season,
+                    ls_games_played = int(last_season_games_played) if last_season_games_played is not None else None,
+                    last_10_games_count = int(player_last_10_games_count) if player_last_10_games_count is not None else None,
+                    last_10_games_wins = int(last_10_games_wins) if last_10_games_wins is not None else None,
+                    last_10_games_losses = int(last_10_games_losses) if last_10_games_losses is not None else None,
+                    last_10_games_points = int(last_10_games_points) if last_10_games_points is not None else None,
+                    last_10_games_assists = int(last_10_games_assists) if last_10_games_assists is not None else None,
+                    last_10_games_minutes = float(last_10_games_minutes) if last_10_games_minutes is not None else None,
+                    last_10_games_shots_acc = float(last_10_games_shots_acc) if last_10_games_shots_acc is not None else None,
+                    is_active = bool(player['is_active']),
                 )
 
                 session.add(player_record)
                 session.commit()
-                print(f"Dodano gracza: {player['first_name']} {player['last_name']}")
+                insert_counter += 1
+                print(f"{insert_counter}. Dodano gracza: {player['first_name']} {player['last_name']}")
+                if insert_counter == 301:
+                    print(f"Zrestartuj aplikacje bo to było {insert_counter} zapytanie i api się wywalilo")
                 time.sleep(0.5)
 
             except Exception as player_error:
@@ -206,9 +290,17 @@ def fetch_all_players_to_db():
 
 def get_all_players_from_db():
     session = Session()
-    all_players_db = session.query(AllPlayers).all()
-    all_players_ids = {player_id for (player_id,) in session.query(AllPlayers.player_id).all()}
-    session.close()
+    all_players_db = None
+    all_players_ids = None
+
+    try:
+        all_players_db = session.query(AllPlayers).all()
+        all_players_ids = {player_id for (player_id,) in session.query(AllPlayers.player_id).all()}
+    except Exception as e:
+        print("Nie udalo sie pobrac graczy z bazy:\n", e)
+
+    finally:
+        session.close()
 
     return all_players_db, all_players_ids
 

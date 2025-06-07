@@ -21,14 +21,21 @@ class TodayGames(Base):
     game_status_text = Column(String)
     arena_name = Column(String)
 
-    top_home_player_name = Column(String)
+    top_home_player_fullname = Column(String)
+    top_home_player_country = Column(String)
+    top_home_player_position = Column(String)
     top_home_player_photo_URL = Column(String)
-    top_away_player_name = Column(String)
+    top_home_player_points_per_game = Column(Float)
+
+    top_away_player_fullname = Column(String)
+    top_away_player_country = Column(String)
+    top_away_player_position = Column(String)
     top_away_player_photo_URL = Column(String)
+    top_away_player_points_per_game = Column(Float)
 
     def to_dict(self):
         return {
-            'id': self.game_id,
+            'game_id': self.game_id,
             'game_date_est': self.game_date_est,
             'game_season': self.game_season,
             'home_team_id': self.home_team_id,
@@ -40,14 +47,22 @@ class TodayGames(Base):
             'game_status_id': self.game_status_id,
             'game_status_text': self.game_status_text,
             'arena_name': self.arena_name,
-            'top_home_player_name': self.top_home_player_name,
+
+            'top_home_player_fullname': self.top_home_player_fullname,
+            'top_home_player_country': self.top_home_player_country,
+            'top_home_player_position': self.top_home_player_position,
+            'top_home_player_points_per_game': self.top_home_player_points_per_game,
             'top_home_player_photo_URL': self.top_home_player_photo_URL,
-            'top_away_player_name': self.top_away_player_name,
+
+            'top_away_player_fullname': self.top_away_player_fullname,
+            'top_away_player_country': self.top_away_player_country,
+            'top_away_player_position': self.top_away_player_position,
+            'top_away_player_points_per_game': self.top_away_player_points_per_game,
             'top_away_player_photo_URL': self.top_away_player_photo_URL
         }
 
     def __repr__(self):
-        return f"<Game {self.game_id}>"
+        return "<Game {}>".format(self.game_id)
 
 
 
@@ -68,6 +83,8 @@ class AllPlayers(Base):
 
     last_season = Column(String, nullable=True)
     ls_games_played = Column(Integer, nullable=True)
+
+    last_10_games_count = Column(Integer, nullable=True)
     last_10_games_wins = Column(Integer, nullable=True)
     last_10_games_losses = Column(Integer, nullable=True)
     last_10_games_points = Column(Integer, nullable=True)
@@ -77,6 +94,32 @@ class AllPlayers(Base):
 
     is_active = Column(Boolean, nullable=False)
 
+    def to_dict(self):
+        return {
+            'player_id': self.player_id,
+            'first_name': self.first_name,
+            'last_name': self.last_name,
+            'current_team': self.current_team,
+            'age': self.age,
+            'height': self.height,
+            'weight': self.weight,
+            'jersey_nr': self.jersey_nr,
+            'position': self.position,
+            'country': self.country,
+            'last_season': self.last_season,
+            'ls_games_played': self.ls_games_played,
+            'last_10_games_count': self.last_10_games_count,
+            'last_10_games_wins': self.last_10_games_wins,
+            'last_10_games_losses': self.last_10_games_losses,
+            'last_10_games_points': self.last_10_games_points,
+            'last_10_games_assists': self.last_10_games_assists,
+            'last_10_games_minutes': self.last_10_games_minutes,
+            'last_10_games_shots_acc': self.last_10_games_shots_acc,
+            'is_active': self.is_active
+        }
+
+    def __repr__(self):
+        return "<Player {}>".format(self.player_id)
 
 
 
