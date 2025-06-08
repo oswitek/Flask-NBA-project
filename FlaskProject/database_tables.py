@@ -122,5 +122,6 @@ class AllPlayers(Base):
         return "<Player {}>".format(self.player_id)
 
 
-
-
+class AllTeams(Base):
+    __tablename__ = 'teams_info'
+    team_id = Column(Integer, primary_key=True)

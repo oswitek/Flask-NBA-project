@@ -21,5 +21,15 @@ def index():
 
     return render_template('index.html', games=today_games)
 
+
+@app.route('/players')
+def players():
+
+
+
+    return render_template('players.html')
+
+
+
 if __name__ == '__main__':
     app.run(debug=True, port=8000)

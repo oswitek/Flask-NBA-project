@@ -25,9 +25,9 @@ def create_tables():
     except Exception as e:
         print("Błąd przy tworzeniu tabel:\n", e)
 
-def drop_tables():
+def drop_tables(table_name):
     try:
-        Base.metadata.drop_all(bind=engine)
+        Base.metadata.drop_all(bind=engine, tables=[table_name.__table__])
         print("Udało się usunąć tabele")
     except Exception as e:
         print("Błąd przy usuwaniu tabel:\n", e)
@@ -303,6 +303,28 @@ def get_all_players_from_db():
         session.close()
 
     return all_players_db, all_players_ids
+
+def get_specific_player_from_db(player_fullname):
+    session = Session()
+
+    player_name, player_lastname = player_fullname.split(' ')
+
+    player = None
+
+    try:
+        player = session.query(AllPlayers).filter(AllPlayers.first_name.like(player_name), AllPlayers.last_name.like(player_lastname)).first()
+
+    except Exception as e:
+        print("Error during getting player from db:\n", e)
+
+    finally:
+        session.close()
+
+    return player.to_dict()
+
+
+# def fetch_teams_to_db():
+
 
 
 
