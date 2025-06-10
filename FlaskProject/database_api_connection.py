@@ -322,7 +322,47 @@ def get_specific_player_from_db(player_fullname):
 
     return player.to_dict()
 
-
+def search_players_by_name(player_name):
+    """
+    Wyszukuje graczy na podstawie imienia, nazwiska lub pełnej nazwy
+    """
+    session = Session()
+    players = []
+    
+    try:
+        # Wyszukiwanie graczy gdzie imię lub nazwisko zawiera podany tekst
+        search_pattern = f"%{player_name}%"
+        
+        players_query = session.query(AllPlayers).filter(
+            (AllPlayers.first_name.ilike(search_pattern)) |
+            (AllPlayers.last_name.ilike(search_pattern))
+        ).limit(20)  # Ograniczenie do 20 wyników
+        
+        players = players_query.all()
+        
+        # Konwertowanie na obiekty z potrzebnymi atrybutami dla szablonu
+        result_players = []
+        for player in players:
+            player_obj = type('Player', (), {})()
+            player_obj.name = f"{player.first_name} {player.last_name}"
+            player_obj.team = player.current_team if player.current_team else "Free Agent"
+            player_obj.season = player.last_season if player.last_season else "N/A"
+            player_obj.games = player.ls_games_played if player.ls_games_played else 0
+            player_obj.points = player.last_10_games_points if player.last_10_games_points else 0
+            player_obj.rebounds = "N/A"  # Nie masz tego w bazie
+            player_obj.assists = player.last_10_games_assists if player.last_10_games_assists else 0
+            player_obj.photo = f"https://cdn.nba.com/headshots/nba/latest/1040x760/{player.player_id}.png"
+            
+            result_players.append(player_obj)
+        
+        return result_players
+        
+    except Exception as e:
+        print(f"Błąd podczas wyszukiwania graczy: {e}")
+        return []
+    
+    finally:
+        session.close()
 # def fetch_teams_to_db():
 
 
