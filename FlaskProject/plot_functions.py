@@ -1,8 +1,5 @@
-from sqlalchemy import create_engine
-from sqlalchemy.orm import sessionmaker
 from FlaskProject.database_api_connection import get_all_players_from_db
 import pandas as pd
-import plotly.express as px
 import plotly.graph_objects as go
 
 def draw_all_players_distribution(distribution_type, plot_type, active_status=None):
