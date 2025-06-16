@@ -92,10 +92,102 @@ import seaborn as sns
 # print(teams_var)
 
 
+# drop_tables(AllTeams)
+# create_tables()
+#
+# fetch_teams_to_db()
 
-#create_tables()
-#drop_tables(AllTeams)
+# all_teams_api = teams.get_teams()
+#
+# print(len(all_teams_api))
+#
+# for team in all_teams_api:
+#     print(team['id'])
 
+
+# all_players_data, _ = get_all_players_from_db()
+# players_countries_list = [player.country for player in all_players_data]
+# players_countries = pd.Series(players_countries_list).value_counts()
+#
+# usa_count = players_countries.get('USA', 0)
+# rest_sum = players_countries.sum() - usa_count
+# usa_vs_rest = pd.Series({'USA': usa_count, 'Reszta świata': rest_sum})
+#
+# other_countries = players_countries.drop('USA', errors='ignore')
+# other_countries = other_countries[other_countries > 5]
+#
+# fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(14, 7))
+#
+# usa_vs_rest.plot.pie(
+#     ax=ax1,
+#     autopct='%1.1f%%',
+#     startangle=90,
+#     colors=['#1f77b4', '#ff7f0e'],
+#     wedgeprops={'edgecolor': 'white'}
+# )
+# ax1.set_title('Dystrybucja wg. krajów USA vs Reszta', pad=20)
+# ax1.set_ylabel('')
+#
+# other_countries.plot.pie(
+#     ax=ax2,
+#     autopct='%1.1f%%',
+#     startangle=90,
+#     colormap='tab20',
+#     wedgeprops={'edgecolor': 'white'}
+# )
+# ax2.set_title('Rozkład pozostałych krajów', pad=20)
+# ax2.set_ylabel('')
+#
+# plt.tight_layout()
+# plt.show()
+
+# all_players_data, _ = get_all_players_from_db()
+#
+# test_data = []
+#
+# for player in all_players_data:
+#     test_data.append(player.is_active)
+#
+#
+# test = pd.Series(test_data).value_counts().get(key=False)
+#
+# print(test)
+
+import plotly.express as px
+import plotly.graph_objects as go
+from plotly.subplots import make_subplots
+
+
+# all_players_data, _ = get_all_players_from_db()
+# active_status = None
+#
+#
+# players_heights_list = []
+# for player in all_players_data:
+#     if (active_status is True or active_status is False) and player.is_active == active_status and player.height is not None:
+#         players_heights_list.append(int(round(player.height, 0)))
+#     elif active_status is None and player.height is not None:
+#         players_heights_list.append(int(round(player.height, 0)))
+#
+# players_heights = pd.Series(players_heights_list).value_counts().sort_values(ascending=False)
+#
+# print(players_heights)
+
+# players_weights_list = []
+# for player in all_players_data:
+#     if (active_status is True or active_status is False) and player.weight is not None:
+#         players_weights_list.append(int(round(player.weight, 0)))
+#     elif active_status is None and player.weight is not None:
+#         players_weights_list.append(int(round(player.weight, 0)))
+#
+# players_weights = pd.Series(players_weights_list).value_counts().sort_values(ascending=False)
+# print(players_weights)
+
+
+all_players_data, _ = get_all_players_from_db()
+
+for player in all_players_data:
+    print(player.current_team)
 
 
 

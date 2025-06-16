@@ -125,3 +125,11 @@ class AllPlayers(Base):
 class AllTeams(Base):
     __tablename__ = 'teams_info'
     team_id = Column(Integer, primary_key=True)
+    full_name = Column(String, nullable=False)
+    abbreviation = Column(String, nullable=False)
+    nickname = Column(String, nullable=False)
+    city = Column(String, nullable=False)
+    state = Column(String, nullable=False)
+    year_founded = Column(Integer, nullable=True)
+
+

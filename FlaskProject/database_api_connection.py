@@ -3,7 +3,7 @@ from nba_api.stats import endpoints
 from nba_api.stats.static import teams, players
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
-from database_tables import Base, TodayGames, AllPlayers
+from database_tables import Base, TodayGames, AllPlayers, AllTeams
 import datetime
 import time
 import pandas as pd
@@ -28,7 +28,7 @@ def create_tables():
 def drop_tables(table_name):
     try:
         Base.metadata.drop_all(bind=engine, tables=[table_name.__table__])
-        print("Udało się usunąć tabele")
+        print(f"Udało się usunąć tabele {table_name.__table__}.")
     except Exception as e:
         print("Błąd przy usuwaniu tabel:\n", e)
 
@@ -304,28 +304,25 @@ def get_all_players_from_db():
 
     return all_players_db, all_players_ids
 
-def get_specific_player_from_db(player_fullname):
-    session = Session()
-
-    player_name, player_lastname = player_fullname.split(' ')
-
-    player = None
-
-    try:
-        player = session.query(AllPlayers).filter(AllPlayers.first_name.like(player_name), AllPlayers.last_name.like(player_lastname)).first()
-
-    except Exception as e:
-        print("Error during getting player from db:\n", e)
-
-    finally:
-        session.close()
-
-    return player.to_dict()
+# def get_specific_player_from_db(player_fullname):
+#     session = Session()
+#
+#     player_name, player_lastname = player_fullname.split(' ')
+#
+#     player = None
+#
+#     try:
+#         player = session.query(AllPlayers).filter(AllPlayers.first_name.like(player_name), AllPlayers.last_name.like(player_lastname)).first()
+#
+#     except Exception as e:
+#         print("Error during getting player from db:\n", e)
+#
+#     finally:
+#         session.close()
+#
+#     return player.to_dict()
 
 def search_players_by_name(player_name):
-    """
-    Wyszukuje graczy na podstawie imienia, nazwiska lub pełnej nazwy
-    """
     session = Session()
     players = []
     
@@ -349,7 +346,6 @@ def search_players_by_name(player_name):
             player_obj.season = player.last_season if player.last_season else "N/A"
             player_obj.games = player.ls_games_played if player.ls_games_played else 0
             player_obj.points = player.last_10_games_points if player.last_10_games_points else 0
-            player_obj.rebounds = "N/A"  # Nie masz tego w bazie
             player_obj.assists = player.last_10_games_assists if player.last_10_games_assists else 0
             player_obj.photo = f"https://cdn.nba.com/headshots/nba/latest/1040x760/{player.player_id}.png"
             
@@ -358,23 +354,49 @@ def search_players_by_name(player_name):
         return result_players
         
     except Exception as e:
-        print(f"Błąd podczas wyszukiwania graczy: {e}")
+        print(f"Błąd podczas wyszukiwania graczy:\n {e}")
         return []
     
     finally:
         session.close()
-# def fetch_teams_to_db():
 
 
+def fetch_teams_to_db():
+    session = Session()
+    all_teams_api = teams.get_teams()
+
+    try:
+        for team in all_teams_api:
+
+            try:
+                team_record = AllTeams(
+                    team_id = team['id'],
+                    full_name = team['full_name'],
+                    abbreviation = team['abbreviation'],
+                    nickname = team['nickname'],
+                    city = team['city'],
+                    state = team['state'],
+                    year_founded = team['year_founded']
+                )
+
+                session.add(team_record)
+                session.commit()
+
+            except Exception as e:
+                print(f"Błąd przy dodawaniu {team['full_name']}:\n", e)
+
+            finally:
+                print(f"Dodano {team['full_name']} do bazy danych")
+
+    except Exception as e:
+        print("Błąd przy fetchowaniu drużyn do db:\n", e)
+
+    finally:
+        session.close()
 
 
-
-
-
-
-
-
-
-
-
+# def get_team_from_db(team_full_name):
+#     session = Session()
+#
+#     team_record = session.query(AllTeams).filter()
 
