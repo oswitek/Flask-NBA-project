@@ -2,9 +2,55 @@
 <html>
 <head>
     <title>Player Distribution</title>
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', filename='styles.css') }}"
+    />
 </head>
 <body>
+    <nav>
+        <a href="{{ url_for('index') }}">Home</a>
+        <a href="{{ url_for('players') }}">Search for player</a>
+        <a href="{{ url_for('players_charts') }}">Player charts</a>
+    </nav>
     <h1>NBA Players Distribution</h1>
-    <div>{{ plot_html|safe }}</div>
+
+    <div class="charts-layout"> 
+        <form action="/players/charts" method="GET" class="glass-panel"> <div class="control-group">
+                <label for="distribution_type">Typ Dystrybucji:</label>
+                <select name="distribution_type" id="distribution_type">
+                    <option value="teams" {% if selected_distribution_type == 'teams' %}selected{% endif %}>Drużyny</option>
+                    <option value="country" {% if selected_distribution_type == 'country' %}selected{% endif %}>Kraj</option>
+                    <option value="position" {% if selected_distribution_type == 'position' %}selected{% endif %}>Pozycja</option>
+                    <option value="height" {% if selected_distribution_type == 'height' %}selected{% endif %}>Wzrost</option>
+                    <option value="weight" {% if selected_distribution_type == 'weight' %}selected{% endif %}>Waga</option>
+                </select>
+            </div>
+
+            <div class="control-group">
+                <label for="plot_type">Typ Wykresu:</label>
+                <select name="plot_type" id="plot_type">
+                    <option value="pie" {% if selected_plot_type == 'pie' %}selected{% endif %}>Kołowy</option>
+                    <option value="bar" {% if selected_plot_type == 'bar' %}selected{% endif %}>Słupkowy</option>
+                </select>
+            </div>
+
+            <div class="control-group">
+                <label for="active_status">Status Aktywności:</label>
+                <select name="active_status" id="active_status">
+                    <option value="None" {% if selected_active_status == 'None' %}selected{% endif %}>Wszyscy</option>
+                    <option value="true" {% if selected_active_status == 'true' %}selected{% endif %}>Aktywni</option>
+                    <option value="false" {% if selected_active_status == 'false' %}selected{% endif %}>Emerytowani</option>
+                </select>
+            </div>
+            
+            <div class="control-group">
+                <button type="submit">Generuj Wykres</button>
+            </div>
+        </form>
+    </div>
+
+    <div class="plot-container glass-panel"> {{ plot_html|safe }}
+    </div>
 </body>
 </html>

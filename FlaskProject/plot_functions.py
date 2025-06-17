@@ -1,4 +1,4 @@
-from FlaskProject.database_api_connection import get_all_players_from_db
+from database_api_connection import get_all_players_from_db
 import pandas as pd
 import plotly.graph_objects as go
 
@@ -249,7 +249,7 @@ def draw_all_players_distribution(distribution_type, plot_type, active_status=No
             for player in all_players_data:
                 if (active_status is True or active_status is False) and player.current_team is not None:
                     players_teams_list.append(player.current_team)
-                elif active_status is None and player.team is not None:
+                elif active_status is None and player.current_team is not None:
                     players_teams_list.append(player.current_team)
 
             players_teams = pd.Series(players_teams_list).value_counts().sort_values(ascending=False)

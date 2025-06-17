@@ -21,9 +21,9 @@ def index():
     return render_template('index.html', games=today_games)
 
 
-# @app.route('/players')
-# def players():
-#     return render_template('players.html')
+@app.route('/players')
+def players():
+    return render_template('players-search.html')
 
 
 @app.route('/players/search')
@@ -39,16 +39,33 @@ def players_search():
     
     return render_template('players-search.html', players=players, player_name=player_name)
 
-@app.route('/players/charts')
+
+@app.route('/players/charts', methods=['GET'])
 def players_charts():
-    # Trzeba tu dodać zeby distribution_type, plot_type oraz active_status byly pobierane od uzytkownika z listy
 
+    distribution_type = request.args.get('distribution_type', 'teams') 
+    
+    plot_type = request.args.get('plot_type', 'pie')
+    
+    active_status_str = request.args.get('active_status', 'None')
 
+    
+    if active_status_str == 'true':
+        active_status = True
+    elif active_status_str == 'false':
+        active_status = False
+    else:
+        active_status = None 
 
-
-    plot_html = draw_all_players_distribution('teams', 'pie', True)
-    return render_template('players-charts.html', plot_html=plot_html)
-
+    plot_html = draw_all_players_distribution(distribution_type, plot_type, active_status)
+    
+    return render_template(
+        'players-charts.html', 
+        plot_html=plot_html,
+        selected_distribution_type=distribution_type,
+        selected_plot_type=plot_type,
+        selected_active_status=active_status_str 
+    )
 
 if __name__ == '__main__':
     app.run(debug=True, port=8000)
