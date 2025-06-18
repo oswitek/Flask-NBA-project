@@ -255,7 +255,17 @@ nav a:hover {
 	font-size: 1.1em;
 	color: var(--accent-color-1);
 }
+.collapsible-content {
+	max-height: 0;
+	overflow: hidden;
+	width: 100%;
+	transition: max-height 0.5s ease-in-out, margin-top 0.5s ease-in-out;
+}
 
+.collapsible-content.active {
+	max-height: 600px;
+	margin-top: 25px;
+}
 .player-info {
 	display: flex;
 	justify-content: center;
@@ -264,7 +274,6 @@ nav a:hover {
 	padding: 25px;
 	background: rgba(0, 0, 0, 0.2);
 	border-radius: 15px;
-	margin-top: 25px;
 	flex-wrap: wrap;
 	border: 1px dashed var(--accent-color-2);
 }

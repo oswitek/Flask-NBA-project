@@ -14,7 +14,8 @@ def index():
     today_games = None
 
     try:
-        today_games = fetch_today_games_to_db(today_date)
+        fetch_today_games_to_db(today_date)
+        today_games = get_today_games_from_db(today_date)
     except Exception as e:
         print("Wystąpił błąd przy fetch_today_games_to_db", e)
 
