@@ -132,4 +132,16 @@ class AllTeams(Base):
     state = Column(String, nullable=False)
     year_founded = Column(Integer, nullable=True)
 
+    def to_dict(self):
+        return {
+            'team_id': self.team_id,
+            'full_name': self.full_name,
+            'abbreviation': self.abbreviation,
+            'nickname': self.nickname,
+            'city': self.city,
+            'state': self.state,
+            'year_founded': self.year_founded,
+        }
 
+    def __repr__(self):
+        return "<Team {}>".format(self.full_name)

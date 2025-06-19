@@ -4,7 +4,7 @@ from nba_api.stats.static import teams, players
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from database_tables import Base, TodayGames, AllPlayers, AllTeams
-import datetime
+from datetime import datetime, timedelta
 import time
 import pandas as pd
 import traceback
@@ -184,10 +184,16 @@ from plotly.subplots import make_subplots
 # print(players_weights)
 
 
-all_players_data, _ = get_all_players_from_db()
+# all_players_data, _ = get_all_players_from_db()
+#
+# for player in all_players_data:
+#     print(player.current_team)
 
-for player in all_players_data:
-    print(player.current_team)
+# fetch_teams_to_db()
+
+# today_date_var = '2025-06-13'
+# fetch_today_games_to_db(today_date_var)
+
 
 
 

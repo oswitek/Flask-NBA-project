@@ -12,14 +12,15 @@ app = Flask(__name__)
 def index():
     today_date = datetime.today().strftime('%Y-%m-%d')
     today_games = None
+    last_5_games = None
 
     try:
         fetch_today_games_to_db(today_date)
-        today_games = get_today_games_from_db(today_date)
+        today_games, last_5_games = get_today_games_from_db(today_date)
     except Exception as e:
         print("Wystąpił błąd przy fetch_today_games_to_db", e)
 
-    return render_template('index.html', games=today_games)
+    return render_template('index.html', games=today_games, last_games=last_5_games)
 
 
 @app.route('/players')
@@ -50,7 +51,6 @@ def players_charts():
     
     active_status_str = request.args.get('active_status', 'None')
 
-    
     if active_status_str == 'true':
         active_status = True
     elif active_status_str == 'false':

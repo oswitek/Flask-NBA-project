@@ -37,8 +37,9 @@ def get_today_games_from_db(today_date_var):
 
     try:
         today_games = session.query(TodayGames).filter(TodayGames.game_date_est == today_date_var).all()
+        last_5_games = session.query(TodayGames).filter(TodayGames.game_date_est < today_date_var).order_by(TodayGames.game_date_est.desc()).limit(5).all()
 
-        return today_games
+        return today_games, last_5_games
 
     except Exception as e:
         print("There are no games scheduled for today:\n", e)
@@ -50,7 +51,7 @@ def get_today_games_from_db(today_date_var):
 
 def fetch_today_games_to_db(today_date_var):
     session = Session()
-    today_games_in_db = get_today_games_from_db(today_date_var)
+    today_games_in_db, _ = get_today_games_from_db(today_date_var)
 
     if not today_games_in_db:
         try:
@@ -376,7 +377,7 @@ def fetch_teams_to_db():
                     nickname = team['nickname'],
                     city = team['city'],
                     state = team['state'],
-                    year_founded = team['year_founded']
+                    year_founded = team['year_founded'],
                 )
 
                 session.add(team_record)
