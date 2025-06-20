@@ -50,6 +50,12 @@
         </form>
     </div>
 
+    <div class="download-button">
+        <a href="{{ url_for('players_charts', distribution_type=selected_distribution_type, plot_type=selected_plot_type, active_status=selected_active_status, download_csv=True) }}">
+            Pobierz jako .csv
+        </a>
+    </div>
+
     <div class="plot-container glass-panel"> {{ plot_html|safe }}
     </div>
 </body>

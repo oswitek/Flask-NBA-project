@@ -24,6 +24,9 @@ def draw_all_players_distribution(distribution_type, plot_type, active_status=No
                     players_countries_list.append(player.country)
 
             players_countries = pd.Series(players_countries_list).value_counts().sort_values(ascending=False)
+            players_countries_df = players_countries.reset_index()
+            players_countries_df.columns = ['Country', 'Count']
+            csv_file = players_countries_df.to_csv(index=False)
 
             if plot_type == 'pie':
                 fig = go.Figure(
@@ -47,7 +50,7 @@ def draw_all_players_distribution(distribution_type, plot_type, active_status=No
 
                 plot_html = fig.to_html(full_html=False)
 
-                return plot_html
+                return plot_html, csv_file
 
             elif plot_type == 'bar':
                 bar_legend = []
@@ -73,7 +76,7 @@ def draw_all_players_distribution(distribution_type, plot_type, active_status=No
 
                 plot_html = fig.to_html(full_html=False)
 
-                return plot_html
+                return plot_html, csv_file
 
         case 'position':
             players_positions_list = []
@@ -84,6 +87,9 @@ def draw_all_players_distribution(distribution_type, plot_type, active_status=No
                     players_positions_list.append(player.position)
 
             players_positions = pd.Series(players_positions_list).value_counts().sort_values(ascending=False)
+            players_positions_df = players_positions.reset_index()
+            players_positions_df.columns = ['Position', 'Count']
+            csv_file = players_positions_df.to_csv(index=False)
 
             if plot_type == 'pie':
                 fig = go.Figure(data=[go.Pie(
@@ -107,7 +113,7 @@ def draw_all_players_distribution(distribution_type, plot_type, active_status=No
 
                 plot_html = fig.to_html(full_html=False)
 
-                return plot_html
+                return plot_html, csv_file
 
             elif plot_type == 'bar':
                 bar_legend = []
@@ -131,7 +137,7 @@ def draw_all_players_distribution(distribution_type, plot_type, active_status=No
 
                 plot_html = fig.to_html(full_html=False)
 
-                return plot_html
+                return plot_html, csv_file
 
         case 'height':
             players_heights_list = []
@@ -142,6 +148,9 @@ def draw_all_players_distribution(distribution_type, plot_type, active_status=No
                     players_heights_list.append(int(round(player.height, 0)))
 
             players_heights = pd.Series(players_heights_list).value_counts().sort_values(ascending=False)
+            players_heights_df = players_heights.reset_index()
+            players_heights_df.columns = ['Height', 'Count']
+            csv_file = players_heights_df.to_csv(index=False)
 
             if plot_type == 'pie':
                 fig = go.Figure(data=[go.Pie(
@@ -162,7 +171,7 @@ def draw_all_players_distribution(distribution_type, plot_type, active_status=No
 
                 plot_html = fig.to_html(full_html=False)
 
-                return plot_html
+                return plot_html, csv_file
 
             elif plot_type == 'bar':
                 bar_legend = []
@@ -186,7 +195,7 @@ def draw_all_players_distribution(distribution_type, plot_type, active_status=No
 
                 plot_html = fig.to_html(full_html=False)
 
-                return plot_html
+                return plot_html, csv_file
 
         case 'weight':
             players_weights_list = []
@@ -197,6 +206,9 @@ def draw_all_players_distribution(distribution_type, plot_type, active_status=No
                     players_weights_list.append(int(round(player.weight, 0)))
 
             players_weights = pd.Series(players_weights_list).value_counts().sort_values(ascending=False)
+            players_weights_df = players_weights.reset_index()
+            players_weights_df.columns = ['Weight', 'Count']
+            csv_file = players_weights_df.to_csv(index=False)
 
             if plot_type == 'pie':
                 fig = go.Figure(data=[go.Pie(
@@ -218,7 +230,7 @@ def draw_all_players_distribution(distribution_type, plot_type, active_status=No
 
                 plot_html = fig.to_html(full_html=False)
 
-                return plot_html
+                return plot_html, csv_file
 
             if plot_type == 'bar':
                 bar_legend = []
@@ -242,7 +254,7 @@ def draw_all_players_distribution(distribution_type, plot_type, active_status=No
 
                 plot_html = fig.to_html(full_html=False)
 
-                return plot_html
+                return plot_html, csv_file
 
         case 'teams':
             players_teams_list = []
@@ -253,6 +265,9 @@ def draw_all_players_distribution(distribution_type, plot_type, active_status=No
                     players_teams_list.append(player.current_team)
 
             players_teams = pd.Series(players_teams_list).value_counts().sort_values(ascending=False)
+            players_teams_df = players_teams.reset_index()
+            players_teams_df.columns = ['Team', 'Count']
+            csv_file = players_teams_df.to_csv(index=False)
 
             if plot_type == 'pie':
                 fig = go.Figure(data=[go.Pie(
@@ -273,7 +288,7 @@ def draw_all_players_distribution(distribution_type, plot_type, active_status=No
 
                 plot_html = fig.to_html(full_html=False)
 
-                return plot_html
+                return plot_html, csv_file
 
 
 

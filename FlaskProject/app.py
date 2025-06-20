@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, Response
 from database_api_connection import *
 from database_api_connection import search_players_by_name
 from datetime import datetime
@@ -42,7 +42,7 @@ def players_search():
     return render_template('players-search.html', players=players, player_name=player_name)
 
 
-@app.route('/players/charts', methods=['GET'])
+@app.route('/players/charts', methods=['GET', 'POST'])
 def players_charts():
 
     distribution_type = request.args.get('distribution_type', 'teams') 
@@ -58,14 +58,21 @@ def players_charts():
     else:
         active_status = None 
 
-    plot_html = draw_all_players_distribution(distribution_type, plot_type, active_status)
+    plot_html, csv_file = draw_all_players_distribution(distribution_type, plot_type, active_status)
+
+    if request.args.get('download_csv'):
+        return Response(
+            csv_file,
+            mimetype='text/csv',
+            headers={'Content-Disposition': f'attachment; filename="{distribution_type}-{active_status}.csv"'},
+        )
     
     return render_template(
         'players-charts.html', 
         plot_html=plot_html,
         selected_distribution_type=distribution_type,
         selected_plot_type=plot_type,
-        selected_active_status=active_status_str 
+        selected_active_status=active_status_str,
     )
 
 if __name__ == '__main__':
