@@ -75,5 +75,10 @@ def players_charts():
         selected_active_status=active_status_str,
     )
 
+@app.route('/teams')
+def show_teams():
+    teams = get_all_teams()
+    return render_template('teams.html', teams=teams)
+
 if __name__ == '__main__':
     app.run(debug=True, port=8000)

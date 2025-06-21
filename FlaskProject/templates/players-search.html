@@ -1,51 +1,56 @@
 <!DOCTYPE html>
 <html lang="en">
-	<head>
-		<meta charset="UTF-8" />
-		<link
-			rel="stylesheet"
-			href="{{ url_for('static', filename='styles.css') }}"
-		/>
-		<title>NBA Games</title>
-	</head>
-	<body>
-		<nav>
-			<a href="{{ url_for('index') }}">Home</a>
-			<a href="{{ url_for('players') }}">Search for player</a>
-			<a href="{{ url_for('players_charts') }}">Player charts</a>
-		</nav>
-		<h1>Search for the Player</h1>
+    <head>
+        <meta charset="UTF-8" />
+        <link
+            rel="stylesheet"
+            href="{{ url_for('static', filename='styles.css') }}"
+        />
+        <title>NBA Games</title>
+    </head>
+    <body>
+        <nav>
+            <a href="{{ url_for('index') }}">Home</a>
+            <a href="{{ url_for('players') }}">Search for player</a>
+            <a href="{{ url_for('players_charts') }}">Player charts</a>
+            <a href="{{ url_for('show_teams') }}">Teams</a>
+        </nav>
+        <h1>Search for the Player</h1>
 
-		<div class="container search-container">
-			<form method="get" action="{{ url_for('players_search') }}">
-				<input
-					type="text"
-					name="player_name"
-					placeholder="Enter player name..."
-					value="{{ player_name }}"
-				/>
-				<button type="submit">Search</button>
-			</form>
+        <div class="container search-container">
+            <form method="get" action="{{ url_for('players_search') }}">
+                <input
+                    type="text"
+                    name="player_name"
+                    placeholder="Enter player name..."
+                    value="{{ player_name }}"
+                />
+                <button type="submit">Search</button>
+            </form>
 
-			{% if players %}
-			<div class="search-results">
-				<ul>
-					{% for player in players %}
-					<li>
-						<img class="player-photo" src="{{ player.photo }}" />
-						<strong>{{ player.name }}</strong>
-						<span>Team: {{ player.team }} | Season: {{ player.season }}</span>
-						<span
-							>GP: {{ player.games }}, PTS: {{ player.points }}, REB: {{
-							player.rebounds }}, AST: {{ player.assists }}</span
-						>
-					</li>
-					{% endfor %}
-				</ul>
-			</div>
-			{% elif player_name %}
-			<p>No players found for the: "{{ player_name }}"</p>
-			{% endif %}
-		</div>
-	</body>
+            {% if players %}
+            <div class="search-results">
+                <ul>
+                    {% for player in players %}
+                    <li>
+                        <img class="player-photo" src="{{ player.photo }}" />
+                        <strong>{{ player.name }}</strong>
+                        <span
+                            >Team: {{ player.team }} | Season: {{ player.season
+                            }}</span
+                        >
+                        <span
+                            >GP: {{ player.games }}, PTS: {{ player.points }},
+                            REB: {{ player.rebounds }}, AST: {{ player.assists
+                            }}</span
+                        >
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+            {% elif player_name %}
+            <p>No players found for the: "{{ player_name }}"</p>
+            {% endif %}
+        </div>
+    </body>
 </html>

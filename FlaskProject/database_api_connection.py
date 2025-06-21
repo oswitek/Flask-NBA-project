@@ -395,6 +395,21 @@ def fetch_teams_to_db():
     finally:
         session.close()
 
+        
+def get_all_teams():
+    session = Session()
+    try:
+        teams = session.query(AllTeams).order_by(AllTeams.full_name).all()
+       
+        for team in teams:
+            team.logo_url = f"https://cdn.nba.com/logos/nba/{team.team_id}/global/L/logo.svg"
+        return teams
+    except Exception as e:
+        print("Błąd przy pobieraniu drużyn z bazy:", e)
+        return []
+    finally:
+        session.close()
+
 
 # def get_team_from_db(team_full_name):
 #     session = Session()

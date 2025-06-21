@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <title>NBA Teams</title>
+        <link
+            rel="stylesheet"
+            href="{{ url_for('static', filename='styles.css') }}"
+        />
+    </head>
+    <body>
+        <nav>
+            <a href="{{ url_for('index') }}">Home</a>
+            <a href="{{ url_for('players') }}">Search for player</a>
+            <a href="{{ url_for('players_charts') }}">Player charts</a>
+            <a href="{{ url_for('show_teams') }}">Teams</a>
+        </nav>
+
+        <h1>NBA Teams</h1>
+
+        <div class="game-list">
+            {% for team in teams %}
+            <div class="game-card">
+                <img
+                    src="{{ team.logo_url }}"
+                    alt="{{ team.full_name }} logo"
+                    class="team-logo"
+                />
+
+                <div class="team-info">
+                    <div class="team-name">{{ team.full_name }}</div>
+                    <div class="team-meta">
+                        <span class="team-abbr">{{ team.abbreviation }}</span>
+                        &bull;
+                        <span class="team-founded"
+                            >Founded: {{ team.year_founded or 'N/A' }}</span
+                        >
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </body>
+</html>
