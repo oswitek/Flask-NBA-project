@@ -1,88 +1,88 @@
-@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&family=Roboto+Mono:wght@400;700&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&family=Roboto+Mono:wght@400;700&display=swap');
 
 :root {
-    --primary-color: #ff5500;
-    --secondary-color: #007bff;
-    --accent-color-1: #00ffcc;
-    --accent-color-2: #ff00ff;
-    --dark-bg: #1a1a2e;
-    --medium-dark-bg: #282b3d;
-    --light-text: #e0e0e0;
-    --muted-text: #a0a0a0;
+	--primary-color: #ff5500;
+	--secondary-color: #007bff;
+	--accent-color-1: #00ffcc;
+	--accent-color-2: #ff00ff;
+	--dark-bg: #1a1a2e;
+	--medium-dark-bg: #282b3d;
+	--light-text: #e0e0e0;
+	--muted-text: #a0a0a0;
 }
 
 body {
-    font-family: "Montserrat", sans-serif;
-    margin: 0;
-    padding: 0;
-    background: var(--dark-bg);
-    color: var(--light-text);
-    line-height: 1.6;
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;
-    overflow-x: hidden;
-    position: relative;
+	font-family: 'Montserrat', sans-serif;
+	margin: 0;
+	padding: 0;
+	background: var(--dark-bg);
+	color: var(--light-text);
+	line-height: 1.6;
+	display: flex;
+	flex-direction: column;
+	min-height: 100vh;
+	overflow-x: hidden;
+	position: relative;
 }
 
 body::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-image: url('data:image/svg+xml;charset=UTF-8,%3Csvg width="16" height="16" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg"%3E%3Cpath d="M0 0h16v16H0V0zm14 2v12H2V2h12zM8 0a8 8 0 1 0 0 16A8 8 0 0 0 8 0zm0 14a6 6 0 1 1 0-12 6 6 0 0 1 0 12z" fill="%232c2f42"/%3E%3C/svg%3E');
-    opacity: 0.1;
-    z-index: -1;
+	content: '';
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background-image: url('data:image/svg+xml;charset=UTF-8,%3Csvg width="16" height="16" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg"%3E%3Cpath d="M0 0h16v16H0V0zm14 2v12H2V2h12zM8 0a8 8 0 1 0 0 16A8 8 0 0 0 8 0zm0 14a6 6 0 1 1 0-12 6 6 0 0 1 0 12z" fill="%232c2f42"/%3E%3C/svg%3E');
+	opacity: 0.1;
+	z-index: -1;
 }
 
 body::after {
-    content: "";
-    position: fixed;
-    top: -50px;
-    left: -50px;
-    width: 200%;
-    height: 200%;
-    background: radial-gradient(
-            circle at 10% 10%,
-            rgba(255, 85, 0, 0.1) 0%,
-            transparent 25%
-        ),
-        radial-gradient(
-            circle at 90% 90%,
-            rgba(0, 123, 255, 0.1) 0%,
-            transparent 25%
-        );
-    pointer-events: none;
-    z-index: -2;
-    animation: fadeBackground 15s infinite alternate ease-in-out;
+	content: '';
+	position: fixed;
+	top: -50px;
+	left: -50px;
+	width: 200%;
+	height: 200%;
+	background: radial-gradient(
+			circle at 10% 10%,
+			rgba(255, 85, 0, 0.1) 0%,
+			transparent 25%
+		),
+		radial-gradient(
+			circle at 90% 90%,
+			rgba(0, 123, 255, 0.1) 0%,
+			transparent 25%
+		);
+	pointer-events: none;
+	z-index: -2;
+	animation: fadeBackground 15s infinite alternate ease-in-out;
 }
 
 @keyframes fadeBackground {
-    0% {
-        opacity: 0.5;
-        transform: scale(1) translate(0, 0);
-    }
-    50% {
-        opacity: 0.7;
-        transform: scale(1.05) translate(10px, 10px);
-    }
-    100% {
-        opacity: 0.5;
-        transform: scale(1) translate(0, 0);
-    }
+	0% {
+		opacity: 0.5;
+		transform: scale(1) translate(0, 0);
+	}
+	50% {
+		opacity: 0.7;
+		transform: scale(1.05) translate(10px, 10px);
+	}
+	100% {
+		opacity: 0.5;
+		transform: scale(1) translate(0, 0);
+	}
 }
 
 .glass-panel {
-    background: rgba(255, 255, 255, 0.04);
-    backdrop-filter: blur(12px) saturate(190%);
-    -webkit-backdrop-filter: blur(12px) saturate(190%);
-    border: 1px solid rgba(255, 85, 0, 0.4);
-    border-radius: 20px;
-    box-shadow: 0 10px 40px 0 rgba(0, 0, 0, 0.45);
-    margin: 20px auto;
-    padding: 30px;
+	background: rgba(255, 255, 255, 0.04);
+	backdrop-filter: blur(12px) saturate(190%);
+	-webkit-backdrop-filter: blur(12px) saturate(190%);
+	border: 1px solid rgba(255, 85, 0, 0.4);
+	border-radius: 20px;
+	box-shadow: 0 10px 40px 0 rgba(0, 0, 0, 0.45);
+	margin: 20px auto;
+	padding: 30px;
 }
 
 h1,
@@ -91,596 +91,703 @@ h3,
 h4,
 h5,
 h6 {
-    font-family: "Montserrat", sans-serif;
-    font-weight: 900;
-    color: var(--primary-color);
-    text-align: center;
-    /* Usunięto text-shadow dla napisów */
-    margin-bottom: 50px;
-    letter-spacing: 3px;
-    text-transform: uppercase;
-    animation: bounceIn 1s ease-out;
+	font-family: 'Montserrat', sans-serif;
+	font-weight: 900;
+	color: var(--primary-color);
+	text-align: center;
+	/* Usunięto text-shadow dla napisów */
+	margin-bottom: 50px;
+	letter-spacing: 3px;
+	text-transform: uppercase;
+	animation: bounceIn 1s ease-out;
 }
 
 @keyframes bounceIn {
-    0% {
-        opacity: 0;
-        transform: scale(0.5);
-    }
-    80% {
-        opacity: 1;
-        transform: scale(1.05);
-    }
-    100% {
-        transform: scale(1);
-    }
+	0% {
+		opacity: 0;
+		transform: scale(0.5);
+	}
+	80% {
+		opacity: 1;
+		transform: scale(1.05);
+	}
+	100% {
+		transform: scale(1);
+	}
 }
 
 nav {
-    background: rgba(0, 0, 0, 0.5);
-    padding: 25px 0;
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.6);
-    text-align: center;
-    border-bottom: 3px solid var(--secondary-color);
-    position: sticky;
-    top: 0;
-    z-index: 1000;
+	background: rgba(0, 0, 0, 0.5);
+	padding: 25px 0;
+	box-shadow: 0 8px 20px rgba(0, 0, 0, 0.6);
+	text-align: center;
+	border-bottom: 3px solid var(--secondary-color);
+	position: sticky;
+	top: 0;
+	z-index: 1000;
 }
 
 nav a {
-    font-family: "Montserrat", sans-serif;
-    color: var(--light-text);
-    text-decoration: none;
-    margin: 0 35px;
-    font-weight: 700;
-    font-size: 1.3em;
-    transition: all 0.4s ease-in-out;
-    position: relative;
-    padding-bottom: 8px;
-    text-transform: uppercase;
-    letter-spacing: 1.5px;
-    cursor: pointer;
+	font-family: 'Montserrat', sans-serif;
+	color: var(--light-text);
+	text-decoration: none;
+	margin: 0 35px;
+	font-weight: 700;
+	font-size: 1.3em;
+	transition: all 0.4s ease-in-out;
+	position: relative;
+	padding-bottom: 8px;
+	text-transform: uppercase;
+	letter-spacing: 1.5px;
+	cursor: pointer;
 }
 
 nav a::after {
-    content: "";
-    position: absolute;
-    width: 0;
-    height: 4px;
-    bottom: 0;
-    left: 50%;
-    transform: translateX(-50%);
-    background-color: var(--primary-color);
-    border-radius: 2px;
-    transition: width 0.3s ease-in-out;
+	content: '';
+	position: absolute;
+	width: 0;
+	height: 4px;
+	bottom: 0;
+	left: 50%;
+	transform: translateX(-50%);
+	background-color: var(--primary-color);
+	border-radius: 2px;
+	transition: width 0.3s ease-in-out;
 }
 
 nav a:hover::after {
-    width: 100%;
+	width: 100%;
 }
 
 nav a:hover {
-    color: var(--primary-color);
-    text-shadow: none;
-    transform: translateY(-3px);
+	color: var(--primary-color);
+	text-shadow: none;
+	transform: translateY(-3px);
 }
 
 .game-list {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
-    gap: 40px;
-    padding: 30px;
-    margin-bottom: 50px;
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+	gap: 40px;
+	padding: 30px;
+	margin-bottom: 50px;
 }
 
 .game-card {
-    background: rgba(0, 0, 0, 0.3);
-    border: 2px solid var(--secondary-color);
-    border-radius: 25px;
-    box-shadow: 0 12px 45px rgba(0, 0, 0, 0.5);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-    padding: 35px;
-    transition: transform 0.4s ease, box-shadow 0.4s ease,
-        border-color 0.4s ease;
-    position: relative;
-    overflow: hidden;
-    cursor: pointer;
+	background: rgba(0, 0, 0, 0.3);
+	border: 2px solid var(--secondary-color);
+	border-radius: 25px;
+	box-shadow: 0 12px 45px rgba(0, 0, 0, 0.5);
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	text-align: center;
+	padding: 35px;
+	transition: transform 0.4s ease, box-shadow 0.4s ease, border-color 0.4s ease;
+	position: relative;
+	overflow: hidden;
+	cursor: pointer;
 }
 .game-card::before {
-    content: "";
-    position: absolute;
-    top: -10px;
-    left: -10px;
-    width: 50px;
-    height: 50px;
-    border-top: 5px solid var(--accent-color-1);
-    border-left: 5px solid var(--accent-color-1);
-    border-radius: 10px;
+	content: '';
+	position: absolute;
+	top: -10px;
+	left: -10px;
+	width: 50px;
+	height: 50px;
+	border-top: 5px solid var(--accent-color-1);
+	border-left: 5px solid var(--accent-color-1);
+	border-radius: 10px;
 }
 .game-card::after {
-    content: "";
-    position: absolute;
-    bottom: -10px;
-    right: -10px;
-    width: 50px;
-    height: 50px;
-    border-bottom: 5px solid var(--accent-color-2);
-    border-right: 5px solid var(--accent-color-2);
-    border-radius: 10px;
+	content: '';
+	position: absolute;
+	bottom: -10px;
+	right: -10px;
+	width: 50px;
+	height: 50px;
+	border-bottom: 5px solid var(--accent-color-2);
+	border-right: 5px solid var(--accent-color-2);
+	border-radius: 10px;
 }
 
 .game-card:hover {
-    transform: translateY(-12px) scale(1.03);
-    box-shadow: 0 20px 60px rgba(var(--primary-color), 0.6);
-    border-color: var(--primary-color);
+	transform: translateY(-12px) scale(1.03);
+	box-shadow: 0 20px 60px rgba(var(--primary-color), 0.6);
+	border-color: var(--primary-color);
 }
 
 .game-header {
-    width: 100%;
-    margin-bottom: 25px;
+	width: 100%;
+	margin-bottom: 25px;
 }
 
 .game-display {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 25px;
-    font-size: 1.8em;
-    font-weight: 900;
-    color: var(--light-text);
-    text-shadow: none;
-    text-transform: uppercase;
+	display: flex;
+	justify-content: space-between; /* Rozkłada elementy równomiernie */
+	align-items: center; /* Wyrównuje w pionie */
+	width: 100%;
+	gap: 15px; /* Odstęp między kolumnami */
 }
-
+.team-container {
+	display: flex;
+	flex-direction: column; /* Ustawia logo nad nazwą */
+	align-items: center;
+	text-align: center;
+	flex-basis: 40%; /* Każda drużyna zajmuje 40% szerokości */
+	min-width: 0; /* Pozwala na zmniejszanie się elementu flex */
+}
 .team-logo {
-    width: 90px;
-    height: 90px;
-    object-fit: contain;
-    background-color: rgba(0, 0, 0, 0.4);
-    border: 3px solid var(--secondary-color);
-    border-radius: 50%;
-    padding: 10px;
-    transition: transform 0.4s ease, border-color 0.4s ease;
+	width: 80px; /* Możesz dostosować rozmiar */
+	height: 80px; /* Możesz dostosować rozmiar */
+	object-fit: contain;
+	background-color: rgba(0, 0, 0, 0.4);
+	border: 3px solid var(--secondary-color);
+	border-radius: 50%;
+	padding: 8px;
+	transition: transform 0.4s ease, border-color 0.4s ease;
 }
 .team-logo:hover {
-    transform: scale(1.15) rotate(10deg);
-    border-color: var(--primary-color);
+	transform: scale(1.15) rotate(10deg);
+	border-color: var(--primary-color);
+}
+
+.game-info {
+	margin-top: 20px; /* Dodajemy margines, aby oddzielić od nazw drużyn */
+	overflow-y: auto;
 }
 
 .game-info p {
-    margin: 10px 0;
-    font-family: "Roboto Mono", monospace;
-    font-size: 1.1em;
-    color: var(--accent-color-1);
+	margin: 8px 0;
+	font-family: 'Roboto Mono', monospace;
+	font-size: 1em; /* Zmniejszono dla lepszej kompozycji */
+	color: var(--accent-color-1);
 }
 .collapsible-content {
-    max-height: 0;
-    overflow: hidden;
-    width: 100%;
-    transition: max-height 0.5s ease-in-out, margin-top 0.5s ease-in-out;
+	max-height: 0;
+	overflow: hidden;
+	width: 100%;
+	transition: max-height 0.5s ease-in-out, margin-top 0.5s ease-in-out;
 }
 
 .collapsible-content.active {
-    max-height: 600px;
-    margin-top: 25px;
+	max-height: 600px;
+	margin-top: 25px;
 }
 .player-info {
-    display: flex;
-    justify-content: center;
-    align-items: flex-start;
-    gap: 50px;
-    padding: 25px;
-    background: rgba(0, 0, 0, 0.2);
-    border-radius: 15px;
-    flex-wrap: wrap;
-    border: 1px dashed var(--accent-color-2);
+	display: flex;
+	justify-content: center;
+	align-items: flex-start;
+	gap: 50px;
+	padding: 25px;
+	background: rgba(0, 0, 0, 0.2);
+	border-radius: 15px;
+	flex-wrap: wrap;
+	border: 1px dashed var(--accent-color-2);
 }
 
 .player-column {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-    flex-basis: 40%;
-    min-width: 300px;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	text-align: center;
+	flex-basis: 40%;
+	min-width: 300px;
 }
 
 .player-photo {
-    width: 140px;
-    height: 140px;
-    border-radius: 50%;
-    object-fit: cover;
-    border: 5px solid var(--primary-color);
-    box-shadow: 0 0 20px var(--primary-color), 0 0 40px rgba(255, 85, 0, 0.5);
-    margin-bottom: 20px;
-    transition: transform 0.4s ease;
+	width: 100px;
+	height: 100px;
+	border-radius: 50%;
+	object-fit: cover;
+	border: 5px solid var(--primary-color);
+	box-shadow: 0 0 20px var(--primary-color), 0 0 40px rgba(255, 85, 0, 0.5);
+	margin-bottom: 20px;
+	transition: transform 0.4s ease;
 }
 .player-photo:hover {
-    transform: scale(1.1);
+	transform: scale(1.1);
 }
 
 .player-text div {
-    font-family: "Montserrat", sans-serif;
-    font-size: 1.3em;
-    font-weight: 700;
-    color: var(--light-text);
-    text-shadow: none; /* Usunięto text-shadow */
+	font-family: 'Montserrat', sans-serif;
+	font-size: 1.3em;
+	font-weight: 700;
+	color: var(--light-text);
+	text-shadow: none; /* Usunięto text-shadow */
 }
 
 .player-text div:last-child {
-    font-family: "Roboto Mono", monospace;
-    font-size: 1.1em;
-    color: var(--accent-color-1);
+	font-family: 'Roboto Mono', monospace;
+	font-size: 1.1em;
+	color: var(--accent-color-1);
 }
 
 .vs-text {
-    font-family: "Montserrat", sans-serif;
-    font-size: 3.5em;
-    font-weight: 900;
-    color: var(--secondary-color);
-    text-shadow: none; /* Usunięto text-shadow */
-    animation: none; /* Usunięto animację */
+	font-family: 'Montserrat', sans-serif;
+	font-size: 3.5em;
+	font-weight: 900;
+	color: var(--secondary-color);
+	text-shadow: none; /* Usunięto text-shadow */
+	animation: none; /* Usunięto animację */
 }
 
 ul {
-    list-style-type: none;
-    padding: 0;
-    margin: 25px 0;
-    width: 100%;
+	list-style-type: none;
+	padding: 0;
+	margin: 25px 0;
+	width: 100%;
 }
 
 li {
-    background: rgba(0, 0, 0, 0.2);
-    margin-bottom: 12px;
-    padding: 15px 25px;
-    border-radius: 10px;
-    color: var(--light-text);
-    font-size: 1em;
-    border-left: 5px solid var(--primary-color);
-    transition: background-color 0.3s ease, transform 0.2s ease;
-    font-family: "Roboto Mono", monospace;
+	background: rgba(0, 0, 0, 0.2);
+	margin-bottom: 12px;
+	padding: 15px 25px;
+	border-radius: 10px;
+	color: var(--light-text);
+	font-size: 1em;
+	border-left: 5px solid var(--primary-color);
+	transition: background-color 0.3s ease, transform 0.2s ease;
+	font-family: 'Roboto Mono', monospace;
 }
 li:hover {
-    background-color: rgba(255, 85, 0, 0.1);
-    transform: translateX(5px);
+	background-color: rgba(255, 85, 0, 0.1);
+	transform: translateX(5px);
 }
 
 p {
-    margin: 20px 0;
-    color: var(--light-text);
-    font-family: "Roboto Mono", monospace;
+	margin: 20px 0;
+	color: var(--light-text);
+	font-family: 'Roboto Mono', monospace;
 }
 
 hr {
-    border: 0;
-    height: 3px;
-    background: linear-gradient(
-        to right,
-        transparent,
-        var(--accent-color-2),
-        var(--primary-color),
-        var(--accent-color-2),
-        transparent
-    );
-    margin: 50px 0;
-    box-shadow: 0 0 15px rgba(255, 0, 255, 0.5);
+	border: 0;
+	height: 3px;
+	background: linear-gradient(
+		to right,
+		transparent,
+		var(--accent-color-2),
+		var(--primary-color),
+		var(--accent-color-2),
+		transparent
+	);
+	margin: 50px 0;
+	box-shadow: 0 0 15px rgba(255, 0, 255, 0.5);
 }
 
 .charts-layout {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 40px;
-    padding-bottom: 50px;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	gap: 40px;
+	padding-bottom: 50px;
 }
 
 .charts-layout form {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 20px;
-    width: 100%;
-    max-width: 600px;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 20px;
+	width: 100%;
+	max-width: 600px;
 }
 
 .controls {
-    background: rgba(255, 255, 255, 0.04);
-    backdrop-filter: blur(12px) saturate(190%);
-    -webkit-backdrop-filter: blur(12px) saturate(190%);
-    border: 1px solid rgba(255, 85, 0, 0.4);
-    border-radius: 20px;
-    box-shadow: 0 10px 40px 0 rgba(0, 0, 0, 0.45);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 30px;
-    padding: 40px;
-    width: 100%;
-    max-width: 600px;
-    margin: 40px auto;
+	background: rgba(255, 255, 255, 0.04);
+	backdrop-filter: blur(12px) saturate(190%);
+	-webkit-backdrop-filter: blur(12px) saturate(190%);
+	border: 1px solid rgba(255, 85, 0, 0.4);
+	border-radius: 20px;
+	box-shadow: 0 10px 40px 0 rgba(0, 0, 0, 0.45);
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 30px;
+	padding: 40px;
+	width: 100%;
+	max-width: 600px;
+	margin: 40px auto;
 }
 
 .control-group {
-    margin: 0;
-    text-align: center;
-    width: 100%;
+	margin: 0;
+	text-align: center;
+	width: 100%;
 }
 
 label {
-    display: block;
-    margin-bottom: 12px;
-    font-weight: 700;
-    color: var(--accent-color-1);
-    text-shadow: none;
-    font-size: 1.1em;
-    text-transform: uppercase;
+	display: block;
+	margin-bottom: 12px;
+	font-weight: 700;
+	color: var(--accent-color-1);
+	text-shadow: none;
+	font-size: 1.1em;
+	text-transform: uppercase;
 }
 
 select {
-    width: 80%;
-    max-width: 350px;
-    padding: 15px;
-    border: 2px solid var(--secondary-color);
-    border-radius: 10px;
-    background-color: rgba(0, 0, 0, 0.6);
-    color: var(--light-text);
-    font-family: "Roboto Mono", monospace;
-    font-size: 1.2rem;
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    appearance: none;
-    background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23ff5500'%3E%3Cpath d='M7 10l5 5 5-5z'/%3E%3C/svg%3E");
-    background-repeat: no-repeat;
-    background-position: right 20px center;
-    background-size: 25px 25px;
-    transition: all 0.4s ease;
-    cursor: pointer;
+	width: 80%;
+	max-width: 350px;
+	padding: 15px;
+	border: 2px solid var(--secondary-color);
+	border-radius: 10px;
+	background-color: rgba(0, 0, 0, 0.6);
+	color: var(--light-text);
+	font-family: 'Roboto Mono', monospace;
+	font-size: 1.2rem;
+	-webkit-appearance: none;
+	-moz-appearance: none;
+	appearance: none;
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23ff5500'%3E%3Cpath d='M7 10l5 5 5-5z'/%3E%3C/svg%3E");
+	background-repeat: no-repeat;
+	background-position: right 20px center;
+	background-size: 25px 25px;
+	transition: all 0.4s ease;
+	cursor: pointer;
 }
 
 select:focus {
-    outline: none;
-    border-color: var(--primary-color);
-    box-shadow: 0 0 0 5px rgba(255, 85, 0, 0.4);
+	outline: none;
+	border-color: var(--primary-color);
+	box-shadow: 0 0 0 5px rgba(255, 85, 0, 0.4);
 }
 
-button[type="submit"] {
-    padding: 15px 40px;
-    background: var(--primary-color);
-    color: var(--light-text);
-    border: none;
-    border-radius: 10px;
-    cursor: pointer;
-    font-size: 1.2rem;
-    font-weight: 700;
-    text-shadow: none;
-    transition: all 0.4s ease, transform 0.3s ease, box-shadow 0.3s ease;
-    text-transform: uppercase;
-    letter-spacing: 2px;
-    box-shadow: 0 5px 20px rgba(255, 85, 0, 0.4);
+button[type='submit'] {
+	padding: 15px 40px;
+	background: var(--primary-color);
+	color: var(--light-text);
+	border: none;
+	border-radius: 10px;
+	cursor: pointer;
+	font-size: 1.2rem;
+	font-weight: 700;
+	text-shadow: none;
+	transition: all 0.4s ease, transform 0.3s ease, box-shadow 0.3s ease;
+	text-transform: uppercase;
+	letter-spacing: 2px;
+	box-shadow: 0 5px 20px rgba(255, 85, 0, 0.4);
 }
 
-button[type="submit"]:hover {
-    background: var(--accent-color-2);
-    transform: translateY(-8px) scale(1.08);
-    box-shadow: 0 15px 30px rgba(255, 0, 255, 0.5);
+button[type='submit']:hover {
+	background: var(--accent-color-2);
+	transform: translateY(-8px) scale(1.08);
+	box-shadow: 0 15px 30px rgba(255, 0, 255, 0.5);
 }
 
 .plot-container {
-    background: rgba(255, 255, 255, 0.04);
-    backdrop-filter: blur(12px) saturate(190%);
-    -webkit-backdrop-filter: blur(12px) saturate(190%);
-    border: 1px solid rgba(255, 85, 0, 0.4);
-    border-radius: 20px;
-    box-shadow: 0 10px 40px 0 rgba(0, 0, 0, 0.45);
-    text-align: center;
-    min-height: 600px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    overflow: hidden;
-    padding: 20px;
-    width: 100%;
+	background: rgba(255, 255, 255, 0.04);
+	backdrop-filter: blur(12px) saturate(190%);
+	-webkit-backdrop-filter: blur(12px) saturate(190%);
+	border: 1px solid rgba(255, 85, 0, 0.4);
+	border-radius: 20px;
+	box-shadow: 0 10px 40px 0 rgba(0, 0, 0, 0.45);
+	text-align: center;
+	min-height: 600px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	overflow: hidden;
+	padding: 20px;
+	width: 100%;
 }
 
 .js-plotly-plot {
-    background-color: transparent !important;
-    border-radius: 15px;
-    box-shadow: none !important;
-    width: 100% !important;
-    height: 100% !important;
+	background-color: transparent !important;
+	border-radius: 15px;
+	box-shadow: none !important;
+	width: 100% !important;
+	height: 100% !important;
 }
 
 .plotly .modebar {
-    background-color: rgba(0, 0, 0, 0.6) !important;
-    border-radius: 10px !important;
-    padding: 8px 15px !important;
-    border: 1px solid rgba(0, 123, 255, 0.3) !important;
+	background-color: rgba(0, 0, 0, 0.6) !important;
+	border-radius: 10px !important;
+	padding: 8px 15px !important;
+	border: 1px solid rgba(0, 123, 255, 0.3) !important;
 }
 
 .plotly .modebar-btn {
-    color: var(--accent-color-1) !important;
+	color: var(--accent-color-1) !important;
 }
 
 .plotly .modebar-btn:hover {
-    background-color: rgba(0, 123, 255, 0.2) !important;
-    color: var(--primary-color) !important;
+	background-color: rgba(0, 123, 255, 0.2) !important;
+	color: var(--primary-color) !important;
 }
 
 .search-container {
-    background: rgba(255, 255, 255, 0.04);
-    backdrop-filter: blur(12px) saturate(190%);
-    -webkit-backdrop-filter: blur(12px) saturate(190%);
-    border: 1px solid rgba(255, 85, 0, 0.4);
-    border-radius: 20px;
-    box-shadow: 0 10px 40px 0 rgba(0, 0, 0, 0.45);
-    max-width: 900px;
-    margin: 40px auto;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 40px;
+	background: rgba(255, 255, 255, 0.04);
+	backdrop-filter: blur(12px) saturate(190%);
+	-webkit-backdrop-filter: blur(12px) saturate(190%);
+	border: 1px solid rgba(255, 85, 0, 0.4);
+	border-radius: 20px;
+	box-shadow: 0 10px 40px 0 rgba(0, 0, 0, 0.45);
+	max-width: 900px;
+	margin: 40px auto;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	padding: 40px;
 }
 
 form {
-    display: flex;
-    justify-content: center;
-    gap: 25px;
-    margin-bottom: 50px;
-    width: 100%;
-    max-width: 700px;
+	display: flex;
+	justify-content: center;
+	gap: 25px;
+	margin-bottom: 50px;
+	width: 100%;
+	max-width: 700px;
 }
 
-input[type="text"] {
-    flex-grow: 1;
-    padding: 15px 25px;
-    border: 2px solid var(--secondary-color);
-    border-radius: 10px;
-    background-color: rgba(0, 0, 0, 0.6);
-    color: var(--light-text);
-    font-family: "Roboto Mono", monospace;
-    font-size: 1.15rem;
-    transition: all 0.4s ease;
+input[type='text'] {
+	flex-grow: 1;
+	padding: 15px 25px;
+	border: 2px solid var(--secondary-color);
+	border-radius: 10px;
+	background-color: rgba(0, 0, 0, 0.6);
+	color: var(--light-text);
+	font-family: 'Roboto Mono', monospace;
+	font-size: 1.15rem;
+	transition: all 0.4s ease;
 }
 
-input[type="text"]::placeholder {
-    color: var(--muted-text);
+input[type='text']::placeholder {
+	color: var(--muted-text);
 }
 
-input[type="text"]:focus {
-    outline: none;
-    border-color: var(--primary-color);
-    box-shadow: 0 0 0 5px rgba(255, 85, 0, 0.4);
+input[type='text']:focus {
+	outline: none;
+	border-color: var(--primary-color);
+	box-shadow: 0 0 0 5px rgba(255, 85, 0, 0.4);
 }
 
 .search-results {
-    width: 100%;
-    padding: 0;
+	width: 100%;
+	padding: 0;
 }
 
 .search-results ul {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-    gap: 30px;
-    padding: 0;
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+	gap: 30px;
+	padding: 0;
 }
 
 .search-results li {
-    background: rgba(0, 0, 0, 0.3);
-    margin-bottom: 0;
-    padding: 25px;
-    border-radius: 15px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-    font-size: 1.05em;
-    color: var(--light-text);
-    border: 2px solid var(--accent-color-1);
-    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4);
-    transition: transform 0.4s ease, box-shadow 0.4s ease,
-        border-color 0.4s ease;
-    position: relative;
-    overflow: hidden;
-    cursor: pointer;
+	background: rgba(0, 0, 0, 0.3);
+	margin-bottom: 0;
+	padding: 25px;
+	border-radius: 15px;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	text-align: center;
+	font-size: 1.05em;
+	color: var(--light-text);
+	border: 2px solid var(--accent-color-1);
+	box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4);
+	transition: transform 0.4s ease, box-shadow 0.4s ease, border-color 0.4s ease;
+	position: relative;
+	overflow: hidden;
+	cursor: pointer;
 }
 .search-results li::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 30px;
-    height: 5px;
-    background-color: var(--primary-color);
-    border-radius: 0 0 5px 0;
+	content: '';
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 30px;
+	height: 5px;
+	background-color: var(--primary-color);
+	border-radius: 0 0 5px 0;
 }
 .search-results li::after {
-    content: "";
-    position: absolute;
-    bottom: 0;
-    right: 0;
-    width: 30px;
-    height: 5px;
-    background-color: var(--secondary-color);
-    border-radius: 5px 0 0 0;
+	content: '';
+	position: absolute;
+	bottom: 0;
+	right: 0;
+	width: 30px;
+	height: 5px;
+	background-color: var(--secondary-color);
+	border-radius: 5px 0 0 0;
 }
 
 .search-results li:hover {
-    transform: translateY(-10px) scale(1.03);
-    box-shadow: 0 15px 45px rgba(var(--primary-color), 0.5);
-    border-color: var(--primary-color);
+	transform: translateY(-10px) scale(1.03);
+	box-shadow: 0 15px 45px rgba(var(--primary-color), 0.5);
+	border-color: var(--primary-color);
 }
 
 .search-results .player-photo {
-    width: 110px;
-    height: 110px;
-    margin-bottom: 20px;
-    border: 4px solid var(--primary-color);
-    box-shadow: 0 0 15px var(--primary-color), 0 0 30px rgba(255, 85, 0, 0.4);
+	width: 110px;
+	height: 110px;
+	margin-bottom: 20px;
+	border: 4px solid var(--primary-color);
+	box-shadow: 0 0 15px var(--primary-color), 0 0 30px rgba(255, 85, 0, 0.4);
 }
 
 .search-results strong {
-    color: var(--primary-color);
-    font-size: 1.4em;
-    margin-bottom: 8px;
-    text-shadow: none;
+	color: var(--primary-color);
+	font-size: 1.4em;
+	margin-bottom: 8px;
+	text-shadow: none;
 }
 .search-results span {
-    font-family: "Roboto Mono", monospace;
-    font-size: 0.95em;
-    color: var(--light-text);
-    margin-bottom: 5px;
+	font-family: 'Roboto Mono', monospace;
+	font-size: 0.95em;
+	color: var(--light-text);
+	margin-bottom: 5px;
 }
 .search-results span:last-of-type {
-    color: var(--accent-color-1);
-    font-weight: 700;
+	color: var(--accent-color-1);
+	font-weight: 700;
 }
 
 .search-results p {
-    text-align: center;
-    margin-top: 40px;
-    font-size: 1.3em;
-    color: var(--accent-color-2);
-    text-shadow: none;
+	text-align: center;
+	margin-top: 40px;
+	font-size: 1.3em;
+	color: var(--accent-color-2);
+	text-shadow: none;
 }
 
 .game-card,
 .controls,
 .plot-container,
 .search-container {
-    background: rgba(255, 255, 255, 0.04);
-    backdrop-filter: blur(12px) saturate(190%);
-    -webkit-backdrop-filter: blur(12px) saturate(190%);
-    border: 1px solid rgba(255, 85, 0, 0.4);
-    border-radius: 20px;
-    box-shadow: 0 10px 40px 0 rgba(0, 0, 0, 0.45);
+	background: rgba(255, 255, 255, 0.04);
+	backdrop-filter: blur(12px) saturate(190%);
+	-webkit-backdrop-filter: blur(12px) saturate(190%);
+	border: 1px solid rgba(255, 85, 0, 0.4);
+	border-radius: 20px;
+	box-shadow: 0 10px 40px 0 rgba(0, 0, 0, 0.45);
 }
 
 .team-info {
-    margin-top: 20px;
+	margin-top: 20px;
 }
 
 .team-name {
-    font-size: 1.3em;
-    font-weight: 900;
-    color: var(--primary-color);
-    text-transform: uppercase;
+	font-size: 1.1em;
+	font-weight: 700;
+	color: var(--light-text);
+	text-transform: uppercase;
+	letter-spacing: 1px;
+	margin-top: 15px;
+	line-height: 1.3; /* Lepsze odstępy między wierszami w razie zawinięcia */
 }
-
+.vs-separator {
+	font-family: 'Montserrat', sans-serif;
+	font-size: 2em;
+	font-weight: 900;
+	color: var(--primary-color);
+	flex-shrink: 0; /* Zapobiega kurczeniu się "VS" */
+}
 .team-meta {
-    margin-top: 7px;
-    color: var(--accent-color-1);
-    font-family: "Roboto Mono", monospace;
+	margin-top: 7px;
+	color: var(--accent-color-1);
+	font-family: 'Roboto Mono', monospace;
 }
 
 .team-abbr {
-    color: var(--secondary-color);
-    font-weight: 700;
+	color: var(--secondary-color);
+	font-weight: 700;
 }
 
 .team-founded {
-    color: var(--muted-text);
+	color: var(--muted-text);
+}
+/* --- Horizontal Scroll Section for Last Games --- */
+
+.horizontal-scroll-container {
+	display: flex;
+	overflow-x: auto; /* Włączenie przewijania w poziomie */
+	padding: 20px 30px 40px 30px; /* Padding, w tym miejsce na pasek przewijania */
+	gap: 25px;
+	/* Wyrównuje karty do góry, aby nie rozciągały się, gdy jedna z nich zostanie rozwinięta */
+	align-items: flex-start;
+}
+
+/* Ustawienie szerokości kart wewnątrz przewijanego kontenera */
+.horizontal-scroll-container .game-card {
+	flex: 0 0 380px; /* Zapobiega kurczeniu się kart i ustawia ich stałą szerokość */
+	/* Zmniejszenie efektu hover, aby był bardziej subtelny */
+}
+
+.horizontal-scroll-container .game-card:hover {
+	transform: translateY(-8px) scale(1.02);
+}
+
+/* Informacja o braku gier */
+.horizontal-scroll-container .info-text {
+	width: 100%;
+	text-align: center;
+	font-size: 1.2em;
+	color: var(--accent-color-2);
+}
+
+/* Stylowanie paska przewijania dla przeglądarek Webkit (Chrome, Safari, Edge) */
+.horizontal-scroll-container::-webkit-scrollbar {
+	height: 12px;
+}
+
+.horizontal-scroll-container::-webkit-scrollbar-track {
+	background: var(--medium-dark-bg);
+	border-radius: 10px;
+}
+
+.horizontal-scroll-container::-webkit-scrollbar-thumb {
+	background-color: var(--secondary-color);
+	border-radius: 10px;
+	border: 3px solid var(--medium-dark-bg);
+}
+
+.horizontal-scroll-container::-webkit-scrollbar-thumb:hover {
+	background-color: var(--primary-color);
+}
+/* --- Kontener na przyciski w formularzu --- */
+.form-actions {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-wrap: wrap; /* Pozwala przyciskom przenieść się do nowej linii na małych ekranach */
+	gap: 20px; /* Odstęp między przyciskami */
+	width: 100%;
+	margin-top: 15px; /* Odstęp od ostatniego selecta */
+}
+
+/* --- Styl dla linku, aby wyglądał jak przycisk --- */
+.button-like {
+	/* Kopiujemy wygląd z button[type='submit'] */
+	padding: 15px 40px;
+	background: var(--primary-color);
+	color: var(--light-text);
+	border: none;
+	border-radius: 10px;
+	font-size: 1.2rem;
+	font-weight: 700;
+	text-shadow: none;
+	text-transform: uppercase;
+	letter-spacing: 2px;
+	box-shadow: 0 5px 20px rgba(255, 85, 0, 0.4);
+
+	/* Dodajemy właściwości dla linku */
+	text-decoration: none;
+	display: inline-block;
+	text-align: center;
+
+	/* Wspólna animacja */
+	transition: all 0.4s ease, transform 0.3s ease, box-shadow 0.3s ease;
+	cursor: pointer;
+}
+
+/* Wspólny hover dla obu "przycisków" */
+.button-like:hover,
+button[type='submit']:hover {
+	background: var(--accent-color-2);
+	transform: translateY(-8px) scale(1.08);
+	box-shadow: 0 15px 30px rgba(255, 0, 255, 0.5);
+	color: var(--light-text); /* Upewniamy się, że kolor tekstu się nie zmienia */
 }

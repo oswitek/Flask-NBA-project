@@ -1,201 +1,173 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8" />
-        <link
-            rel="stylesheet"
-            href="{{ url_for('static', filename='styles.css') }}"
-        />
-        <title>NBA Games</title>
-    </head>
-    <body>
-        <nav>
-            <a href="{{ url_for('index') }}">Home</a>
-            <a href="{{ url_for('players') }}">Search for player</a>
-            <a href="{{ url_for('players_charts') }}">Player charts</a>
-            <a href="{{ url_for('show_teams') }}">Teams</a>
-        </nav>
+	<head>
+		<meta charset="UTF-8" />
+		<link
+			rel="stylesheet"
+			href="{{ url_for('static', filename='styles.css') }}"
+		/>
+		<title>NBA Games</title>
+	</head>
+	<body>
+		<nav>
+			<a href="{{ url_for('index') }}">Home</a>
+			<a href="{{ url_for('players') }}">Search for player</a>
+			<a href="{{ url_for('players_charts') }}">Player charts</a>
+			<a href="{{ url_for('show_teams') }}">Teams</a>
+		</nav>
 
-        <h1>Today's NBA Games</h1>
+		<h1>Today's NBA Games</h1>
 
-        <div class="container">
-            {% if games %}
-            <div class="game-list">
-                {% for game in games %}
-                <div class="game-card">
-                    <div class="game-header">
-                        <div class="game-display">
-                            <img
-                                src="{{ game.home_team_logo_URL }}"
-                                class="team-logo"
-                            />
-                            {{ game.home_team_name }} VS {{ game.away_team_name
-                            }}
-                            <img
-                                src="{{ game.away_team_logo_URL }}"
-                                class="team-logo"
-                            />
-                        </div>
+		<div class="container">
+			{% if games %}
+			<div class="game-list">
+				{% for game in games %}
+				<div class="game-card">
+					<div class="game-header">
+						<div class="game-display">
+							<div class="team-container">
+								<img src="{{ game.home_team_logo_URL }}" class="team-logo" />
+								<span class="team-name">{{ game.home_team_name }}</span>
+							</div>
+							<div class="vs-separator">VS</div>
+							<div class="team-container">
+								<img src="{{ game.away_team_logo_URL }}" class="team-logo" />
+								<span class="team-name">{{ game.away_team_name }}</span>
+							</div>
+						</div>
+						<div class="game-info">
+							<p>Place: {{ game.arena_name }}</p>
+							{% if game.game_date_est %}
+							<p>{{ game.game_date_est }}</p>
+							{% else %}
+							<p>No time aligned</p>
+							{% endif %}
+						</div>
+					</div>
 
-                        <div class="game-info">
-                            <p>Place: {{ game.arena_name }}</p>
-                            {% if game.game_date_est %}
-                            <p>{{ game.game_date_est }}</p>
-                            {% else %}
-                            <p>No time aligned</p>
-                            {% endif %}
-                        </div>
-                    </div>
+					<div class="collapsible-content">
+						{% if game.top_home_player_fullname and
+						game.top_away_player_fullname %}
+						<div class="player-info">
+							<div class="player-column">
+								<img
+									src="{{ game.top_home_player_photo_URL }}"
+									class="player-photo"
+								/>
+								<div class="player-text">
+									<div>{{ game.top_home_player_fullname }}</div>
+									<div>PPG: {{ game.top_home_player_points_per_game }}</div>
+								</div>
+							</div>
+							<div class="vs-text">VS</div>
+							<div class="player-column">
+								<img
+									src="{{ game.top_away_player_photo_URL }}"
+									class="player-photo"
+								/>
+								<div class="player-text">
+									<div>{{ game.top_away_player_fullname }}</div>
+									<div>PPG: {{ game.top_away_player_points_per_game }}</div>
+								</div>
+							</div>
+						</div>
+						{% else %}
+						<p>No players to match</p>
+						{% endif %} {% if game.odds %}
+						<p>Booker: {{ game.odds.booker_name }}</p>
+						<ul>
+							{% for outcome in game.odds.outcomes %}
+							<li>
+								{{ outcome.team }} - Odds: {{ outcome.odds }} (Trend: {{
+								outcome.trend }})
+							</li>
+							{% endfor %}
+						</ul>
+						{% else %}
+						<p>No odds available</p>
+						{% endif %}
+					</div>
+				</div>
+				{% endfor %}
+			</div>
+			{% else %}
+			<p>There are no scheduled games today!</p>
+			{% endif %}
+		</div>
 
-                    <div class="collapsible-content">
-                        {% if game.top_home_player_fullname and
-                        game.top_away_player_fullname %}
-                        <div class="player-info">
-                            <div class="player-column">
-                                <img
-                                    src="{{ game.top_home_player_photo_URL }}"
-                                    class="player-photo"
-                                />
-                                <div class="player-text">
-                                    <div>
-                                        {{ game.top_home_player_fullname }}
-                                    </div>
-                                    <div>
-                                        PPG: {{
-                                        game.top_home_player_points_per_game }}
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="vs-text">VS</div>
-                            <div class="player-column">
-                                <img
-                                    src="{{ game.top_away_player_photo_URL }}"
-                                    class="player-photo"
-                                />
-                                <div class="player-text">
-                                    <div>
-                                        {{ game.top_away_player_fullname }}
-                                    </div>
-                                    <div>
-                                        PPG: {{
-                                        game.top_away_player_points_per_game }}
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        {% else %}
-                        <p>No players to match</p>
-                        {% endif %} {% if game.odds %}
-                        <p>Booker: {{ game.odds.booker_name }}</p>
-                        <ul>
-                            {% for outcome in game.odds.outcomes %}
-                            <li>
-                                {{ outcome.team }} - Odds: {{ outcome.odds }}
-                                (Trend: {{ outcome.trend }})
-                            </li>
-                            {% endfor %}
-                        </ul>
-                        {% else %}
-                        <p>No odds available</p>
-                        {% endif %}
-                    </div>
-                </div>
-                {% endfor %}
-            </div>
-            {% else %}
-            <p>There are no scheduled games today!</p>
-            {% endif %}
-        </div>
-        <h1>Last five games</h1>
-        <div class="container">
-            {% if last_games %}
-            <div class="game-list">
-                {% for game in last_games %}
-                <div class="game-card">
-                    <div class="game-header">
-                        <div class="game-display">
-                            <img
-                                src="{{ game.home_team_logo_URL }}"
-                                class="team-logo"
-                            />
-                            {{ game.home_team_name }} VS {{ game.away_team_name
-                            }}
-                            <img
-                                src="{{ game.away_team_logo_URL }}"
-                                class="team-logo"
-                            />
-                        </div>
+		<h1>Last five games</h1>
+		<div class="horizontal-scroll-container">
+			{% if last_games %} {% for game in last_games %}
+			<div class="game-card">
+				<div class="game-header">
+					<div class="game-display">
+						<div class="team-container">
+							<img src="{{ game.home_team_logo_URL }}" class="team-logo" />
+							<span class="team-name">{{ game.home_team_name }}</span>
+						</div>
+						<div class="vs-separator">VS</div>
+						<div class="team-container">
+							<img src="{{ game.away_team_logo_URL }}" class="team-logo" />
+							<span class="team-name">{{ game.away_team_name }}</span>
+						</div>
+					</div>
+					<div class="game-info">
+						<p>Place: {{ game.arena_name }}</p>
+						{% if game.game_date_est %}
+						<p>{{ game.game_date_est }}</p>
+						{% else %}
+						<p>No time aligned</p>
+						{% endif %}
+					</div>
+				</div>
+				<div class="collapsible-content">
+					{% if game.top_home_player_fullname and game.top_away_player_fullname
+					%}
+					<div class="player-info">
+						<div class="player-column">
+							<img
+								src="{{ game.top_home_player_photo_URL }}"
+								class="player-photo"
+							/>
+							<div class="player-text">
+								<div>{{ game.top_home_player_fullname }}</div>
+								<div>PPG: {{ game.top_home_player_points_per_game }}</div>
+							</div>
+						</div>
+						<div class="vs-text">VS</div>
+						<div class="player-column">
+							<img
+								src="{{ game.top_away_player_photo_URL }}"
+								class="player-photo"
+							/>
+							<div class="player-text">
+								<div>{{ game.top_away_player_fullname }}</div>
+								<div>PPG: {{ game.top_away_player_points_per_game }}</div>
+							</div>
+						</div>
+					</div>
+					{% else %}
+					<p>No players to match</p>
+					{% endif %} {% if game.odds %}
+					<p>Booker: {{ game.odds.booker_name }}</p>
+					<ul>
+						{% for outcome in game.odds.outcomes %}
+						<li>
+							{{ outcome.team }} - Odds: {{ outcome.odds }} (Trend: {{
+							outcome.trend }})
+						</li>
+						{% endfor %}
+					</ul>
+					{% else %}
+					<p>No odds available</p>
+					{% endif %}
+				</div>
+			</div>
+			{% endfor %} {% else %}
+			<p class="info-text">No recent games found.</p>
+			{% endif %}
+		</div>
 
-                        <div class="game-info">
-                            <p>Place: {{ game.arena_name }}</p>
-                            {% if game.game_date_est %}
-                            <p>{{ game.game_date_est }}</p>
-                            {% else %}
-                            <p>No time aligned</p>
-                            {% endif %}
-                        </div>
-
-                        <div class="collapsible-content">
-                            {% if game.top_home_player_fullname and
-                            game.top_away_player_fullname %}
-                            <div class="player-info">
-                                <div class="player-column">
-                                    <img
-                                        src="{{ game.top_home_player_photo_URL }}"
-                                        class="player-photo"
-                                    />
-                                    <div class="player-text">
-                                        <div>
-                                            {{ game.top_home_player_fullname }}
-                                        </div>
-                                        <div>
-                                            PPG: {{
-                                            game.top_home_player_points_per_game
-                                            }}
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="vs-text">VS</div>
-                                <div class="player-column">
-                                    <img
-                                        src="{{ game.top_away_player_photo_URL }}"
-                                        class="player-photo"
-                                    />
-                                    <div class="player-text">
-                                        <div>
-                                            {{ game.top_away_player_fullname }}
-                                        </div>
-                                        <div>
-                                            PPG: {{
-                                            game.top_away_player_points_per_game
-                                            }}
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            {% else %}
-                            <p>No players to match</p>
-                            {% endif %} {% if game.odds %}
-                            <p>Booker: {{ game.odds.booker_name }}</p>
-                            <ul>
-                                {% for outcome in game.odds.outcomes %}
-                                <li>
-                                    {{ outcome.team }} - Odds: {{ outcome.odds
-                                    }} (Trend: {{ outcome.trend }})
-                                </li>
-                                {% endfor %}
-                            </ul>
-                            {% else %}
-                            <p>No odds available</p>
-                            {% endif %}
-                        </div>
-                    </div>
-                </div>
-                {% endfor %}
-            </div>
-            {% endif %}
-        </div>
-
-        <script src="{{ url_for('static', filename='app.js') }}"></script>
-    </body>
+		<script src="{{ url_for('static', filename='app.js') }}"></script>
+	</body>
 </html>
