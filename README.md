@@ -13,7 +13,7 @@ This project focuses on delivering enhanced, real-time NBA data by presenting li
 
 ## Usage
 To use this app follow these steps
-1. Activate virtual enviroment and install all required dependencies by running commands in the project's terminal:
+1. Activate virtual enviroment and install all required dependencies by running each command in the project's terminal:
 ```
 python -m venv venv
 venv\Scripts\activate
