@@ -1,6 +1,7 @@
 import os
 from nba_api.stats import endpoints
 from nba_api.stats.static import teams, players
+from nba_api.stats.library.http import NBAStatsHTTP
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from database_tables import Base, TodayGames, AllPlayers, AllTeams
@@ -11,6 +12,7 @@ import traceback
 from dotenv import load_dotenv
 
 
+NBAStatsHTTP().timeout = 30
 load_dotenv()
 DATABASE_URL = os.getenv('DATABASE_URL')
 engine = create_engine(DATABASE_URL, connect_args={'client_encoding': 'utf8'})
@@ -55,7 +57,7 @@ def fetch_today_games_to_db(today_date_var):
 
     if not today_games_in_db:
         try:
-            scoreboard = endpoints.ScoreboardV2(game_date=today_date_var)
+            scoreboard = endpoints.ScoreboardV2(game_date=today_date_var, timeout=30)
             today_games = scoreboard.game_header.get_dict()['data']
             #print("1 pass")
 
