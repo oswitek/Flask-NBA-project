@@ -15,10 +15,14 @@ def index():
     last_5_games = []
 
     try:
-        fetch_today_games_to_db(today_date)
         today_games, last_5_games = get_today_games_from_db(today_date)
+        if not today_games:
+            try:
+                fetch_today_games_to_db(today_date)
+            except Exception as e:
+                print("Wystąpił błąd przy fetch_today_games_to_db", e)
     except Exception as e:
-        print("Wystąpił błąd przy fetch_today_games_to_db", e)
+        print("Wystąpił błąd przy główny: ", e)
 
     return render_template('index.html', games=today_games, last_games=last_5_games)
 
