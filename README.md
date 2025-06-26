@@ -18,4 +18,4 @@ This project focuses on delivering enhanced, real-time NBA data by presenting li
 
 ## Live Demo
 You can preview the app at:  
-`https://flask-nba.onrender.com/`
+[https://flask-nba.onrender.com/](https://flask-nba.onrender.com/)
