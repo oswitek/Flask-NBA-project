@@ -11,8 +11,14 @@ import pandas as pd
 import traceback
 from dotenv import load_dotenv
 
+NBA_API_HEADERS = {
+    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36',
+    'Referer': 'https://www.nba.com/',
+}
 
 NBAStatsHTTP().timeout = 30
+NBAStatsHTTP().headers = NBA_API_HEADERS
+
 load_dotenv()
 DATABASE_URL = os.getenv('DATABASE_URL')
 engine = create_engine(DATABASE_URL, connect_args={'client_encoding': 'utf8'})
