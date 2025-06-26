@@ -11,8 +11,8 @@ app = Flask(__name__)
 @app.route('/')
 def index():
     today_date = datetime.today().strftime('%Y-%m-%d')
-    today_games = None
-    last_5_games = None
+    today_games = []
+    last_5_games = []
 
     try:
         fetch_today_games_to_db(today_date)
