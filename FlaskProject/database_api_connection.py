@@ -16,6 +16,12 @@ NBA_API_HEADERS = {
     'Referer': 'https://www.nba.com/',
 }
 
+PROXY = {
+    'http': 'http://38.147.98.190:8080',
+    'https': 'http://38.147.98.190:8080'
+}
+
+NBAStatsHTTP.proxies = PROXY
 NBAStatsHTTP().timeout = 30
 NBAStatsHTTP().headers = NBA_API_HEADERS
 
