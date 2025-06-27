@@ -9,7 +9,7 @@ This project focuses on delivering enhanced, real-time NBA data by presenting li
 - Cloud-hosted `PostgreSQL` database for efficient data storage and management
 - Integration between `nba_api` and `PostgreSQL` database
 - Interactive visualizations of player distributions f.e. by height, weight or country with customizable plot types and career activity filters made with `Plotly`
-- Search functionality to quickly find detailed information about specific players or teams
+- Search functionality to quickly find statistics and detailed information about specific players or teams
 
 ## ETL Data Pipeline
 - **Live Data**: Real-time data retrieved from `nba_api`
