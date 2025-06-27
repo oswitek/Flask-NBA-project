@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8" />
+    <title>Team game history </title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}" />
+</head>
+<body>
+    <nav>
+        <a href="{{ url_for('index') }}">Home</a>
+        <a href="{{ url_for('players') }}">Search for player</a>
+        <a href="{{ url_for('players_charts') }}">Player charts</a>
+        <a href="{{ url_for('show_teams') }}">Teams</a>
+    </nav>
+
+
+    <h1>Team Games for Season {{ selected_season }}</h1>
+
+    <form method="get" style="display: flex; gap: 1rem; align-items: flex-end; margin-bottom: 1rem;">
+        <div>
+            <label for="season">Season:</label><br>
+            <select name="season" id="season" onchange="this.form.submit()">
+                {% for s in seasons %}
+                    <option value="{{ s }}" {% if s == selected_season %}selected{% endif %}>{{ s }}</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <div>
+            <label for="sort">Sort:</label><br>
+            <select name="sort" id="sort" onchange="this.form.submit()">
+                <option value="date_desc" {% if request.args.get('sort') == 'date_desc' %}selected{% endif %}>Date ↓</option>
+                <option value="date_asc" {% if request.args.get('sort') == 'date_asc' %}selected{% endif %}>Date ↑</option>
+                <option value="pts_desc" {% if request.args.get('sort') == 'pts_desc' %}selected{% endif %}>Points ↓</option>
+                <option value="pts_asc" {% if request.args.get('sort') == 'pts_asc' %}selected{% endif %}>Points ↑</option>
+                <option value="opp_desc" {% if request.args.get('sort') == 'opp_desc' %}selected{% endif %}>Opponent ↓</option>
+                <option value="opp_asc" {% if request.args.get('sort') == 'opp_asc' %}selected{% endif %}>Opponent ↑</option>
+            </select>
+        </div>
+    </form>
+
+    <hr>
+
+    {% for entry in games %}
+        <div class="game-entry">
+            <p>
+                <strong>{{ entry.game.game_date }}</strong> — {{ entry.game.matchup }} —
+                Result: {{ entry.game.wl }} —
+                PTS: {{ entry.game.pts }} : {{ entry.opp_pts }}
+            </p>
+
+            <p>
+                {% if entry.mvp %}
+                    MVP: <strong>{{ entry.mvp.player_name }}</strong>
+                    ({{ entry.mvp.team_abbreviation }}) —
+                    PTS: {{ entry.mvp.pts }},
+                    AST: {{ entry.mvp.ast }},
+                    REB: {{ entry.mvp.reb }},
+                    BLK: {{ entry.mvp.blk }}
+                {% else %}
+                    MVP: no data
+                {% endif %}
+            </p>
+        </div>
+    {% endfor %}
+
+    <div class="pagination">
+        {% if current_page > 1 %}
+            <a href="?season={{ selected_season }}&sort={{ request.args.get('sort', 'date_desc') }}&page=1" class="page-btn">« First</a>
+            <a href="?season={{ selected_season }}&sort={{ request.args.get('sort', 'date_desc') }}&page={{ current_page - 1 }}" class="page-btn">‹ Previous</a>
+        {% endif %}
+
+        {% for p in range(1, total_pages + 1) %}
+            {% if p == current_page %}
+                <strong class="page-btn active">{{ p }}</strong>
+            {% else %}
+                <a href="?season={{ selected_season }}&sort={{ request.args.get('sort', 'date_desc') }}&page={{ p }}" class="page-btn">{{ p }}</a>
+            {% endif %}
+        {% endfor %}
+
+        {% if current_page < total_pages %}
+            <a href="?season={{ selected_season }}&sort={{ request.args.get('sort', 'date_desc') }}&page={{ current_page + 1 }}" class="page-btn">Next ›</a>
+            <a href="?season={{ selected_season }}&sort={{ request.args.get('sort', 'date_desc') }}&page={{ total_pages }}" class="page-btn">Last »</a>
+        {% endif %}
+    </div>
+</body>
+</html>

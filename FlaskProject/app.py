@@ -2,6 +2,9 @@ from flask import Flask, render_template, request, Response
 from database_api_connection import *
 from database_api_connection import search_players_by_name
 from datetime import datetime
+from database_tables import AllGames, PlayerStats
+from sqlalchemy.orm import aliased
+from datetime import date
 from plot_functions import *
 
 app = Flask(__name__)
@@ -78,6 +81,102 @@ def players_charts():
 def show_teams():
     teams = get_all_teams()
     return render_template('teams.html', teams=teams)
+
+SEASONS = {
+    "2019-20": (date(2019, 8, 1), date(2020, 8, 1)),
+    "2020-21": (date(2020, 8, 1), date(2021, 8, 1)),
+    "2021-22": (date(2021, 8, 1), date(2022, 8, 1)),
+    "2022-23": (date(2022, 8, 1), date(2023, 8, 1)),
+    "2023-24": (date(2023, 8, 1), date(2024, 8, 1)),
+}
+
+@app.route('/team/<int:team_id>')
+def show_team_latest_games(team_id):
+    session = Session()
+
+    season = request.args.get("season", "2023-24")
+    start_date, end_date = SEASONS.get(season, SEASONS["2023-24"])
+
+    try:
+        current_page = int(request.args.get("page", 1))
+        if current_page < 1:
+            current_page = 1
+    except ValueError:
+        current_page = 1
+
+    per_page = 10
+
+    sort_option = request.args.get("sort", "date_desc")
+    Opponent = aliased(AllGames)
+
+    if sort_option == "date_asc":
+        sort_column = AllGames.game_date.asc()
+    elif sort_option == "pts_asc":
+        sort_column = AllGames.pts.asc()
+    elif sort_option == "pts_desc":
+        sort_column = AllGames.pts.desc()
+    elif sort_option == "opp_asc":
+        sort_column = Opponent.pts.asc()
+    elif sort_option == "opp_desc":
+        sort_column = Opponent.pts.desc()
+    else:
+        sort_column = AllGames.game_date.desc()
+
+    total_games = session.query(AllGames).filter(
+        AllGames.team_id == team_id,
+        AllGames.game_date >= start_date,
+        AllGames.game_date < end_date
+    ).count()
+
+    total_pages = (total_games + per_page - 1) // per_page
+
+    raw_games = (
+        session.query(
+            AllGames,
+            Opponent.pts.label("opp_pts")
+        )
+        .join(
+            Opponent,
+            (AllGames.game_id == Opponent.game_id) &
+            (AllGames.team_id != Opponent.team_id)
+        )
+        .filter(
+            AllGames.team_id == team_id,
+            AllGames.game_date >= start_date,
+            AllGames.game_date < end_date
+        )
+        .order_by(sort_column)
+        .offset((current_page - 1) * per_page)
+        .limit(per_page)
+        .all()
+    )
+
+    games = []
+    for game, opp_pts in raw_games:
+        mvp = (
+            session.query(PlayerStats)
+            .filter(PlayerStats.game_id == game.game_id)
+            .order_by(PlayerStats.pts.desc())
+            .first()
+        )
+        games.append({
+            "game": game,
+            "opp_pts": opp_pts,
+            "mvp": mvp
+        })
+
+    session.close()
+
+    return render_template(
+        "team_latest_games.html",
+        games=games,
+        team_id=team_id,
+        selected_season=season,
+        seasons=SEASONS.keys(),
+        current_page=current_page,
+        total_pages=total_pages,
+        per_page=per_page,
+    )
 
 if __name__ == '__main__':
     app.run(debug=True, port=8000)

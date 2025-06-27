@@ -20,24 +20,30 @@
 
         <div class="game-list">
             {% for team in teams %}
-            <div class="game-card">
-                <img
-                    src="{{ team.logo_url }}"
-                    alt="{{ team.full_name }} logo"
-                    class="team-logo"
-                />
-
-                <div class="team-info">
-                    <div class="team-name">{{ team.full_name }}</div>
-                    <div class="team-meta">
-                        <span class="team-abbr">{{ team.abbreviation }}</span>
-                        &bull;
-                        <span class="team-founded"
-                            >Founded: {{ team.year_founded or 'N/A' }}</span
-                        >
+            <a
+                href="{{ url_for('show_team_latest_games', team_id=team.team_id) }}"
+                class="game-card-link"
+            >
+                <div class="game-card">
+                    <img
+                        src="{{ team.logo_url }}"
+                        alt="{{ team.full_name }} logo"
+                        class="team-logo"
+                    />
+                    <div class="team-info">
+                        <div class="team-name">{{ team.full_name }}</div>
+                        <div class="team-meta">
+                            <span class="team-abbr"
+                                >{{ team.abbreviation }}</span
+                            >
+                            &bull;
+                            <span class="team-founded"
+                                >Founded: {{ team.year_founded or 'N/A' }}</span
+                            >
+                        </div>
                     </div>
                 </div>
-            </div>
+            </a>
             {% endfor %}
         </div>
     </body>
