@@ -409,6 +409,22 @@ def get_all_teams():
         return []
     finally:
         session.close()
+        
+def get_team_logos():
+    session = Session()
+    try:
+        teams = session.query(AllTeams).all()
+        team_logos = {
+            team.abbreviation: f"https://cdn.nba.com/logos/nba/{team.team_id}/global/L/logo.svg"
+            for team in teams
+        }
+        return team_logos
+    except Exception as e:
+        print("Błąd przy pobieraniu logo drużyn:", e)
+        return {}
+    finally:
+        session.close()
+
 
 
 # def get_team_from_db(team_full_name):

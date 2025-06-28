@@ -4,6 +4,7 @@
     <meta charset="UTF-8" />
     <title>Team game history </title>
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}" />
+   
 </head>
 <body>
     <nav>
@@ -13,49 +14,72 @@
         <a href="{{ url_for('show_teams') }}">Teams</a>
     </nav>
 
-
     <h1>Team Games for Season {{ selected_season }}</h1>
-<div class="filters">
-  <form method="get" class="filters__form">
-    <select name="season" onchange="this.form.submit()">
-      {% for s in seasons %}
-        <option value="{{ s }}" {% if s == selected_season %}selected{% endif %}>{{ s }}</option>
-      {% endfor %}
-    </select>
+    <div class="filters">
+      <form method="get" class="filters__form">
+        <select name="season" onchange="this.form.submit()">
+          {% for s in seasons %}
+            <option value="{{ s }}" {% if s == selected_season %}selected{% endif %}>{{ s }}</option>
+          {% endfor %}
+        </select>
 
-    <select name="sort" onchange="this.form.submit()">
-      <option value="date_desc" {% if request.args.get('sort') == 'date_desc' %}selected{% endif %}>Date ↓</option>
-      <option value="date_asc" {% if request.args.get('sort') == 'date_asc' %}selected{% endif %}>Date ↑</option>
-      <option value="pts_desc" {% if request.args.get('sort') == 'pts_desc' %}selected{% endif %}>Points ↓</option>
-      <option value="pts_asc" {% if request.args.get('sort') == 'pts_asc' %}selected{% endif %}>Points ↑</option>
-      <option value="opp_desc" {% if request.args.get('sort') == 'opp_desc' %}selected{% endif %}>Opponent ↓</option>
-      <option value="opp_asc" {% if request.args.get('sort') == 'opp_asc' %}selected{% endif %}>Opponent ↑</option>
-    </select>
-  </form>
-</div>
+        <select name="sort" onchange="this.form.submit()">
+          <option value="date_desc" {% if request.args.get('sort') == 'date_desc' %}selected{% endif %}>Date ↓</option>
+          <option value="date_asc" {% if request.args.get('sort') == 'date_asc' %}selected{% endif %}>Date ↑</option>
+          <option value="pts_desc" {% if request.args.get('sort') == 'pts_desc' %}selected{% endif %}>Points ↓</option>
+          <option value="pts_asc" {% if request.args.get('sort') == 'pts_asc' %}selected{% endif %}>Points ↑</option>
+          <option value="opp_desc" {% if request.args.get('sort') == 'opp_desc' %}selected{% endif %}>Opponent ↓</option>
+          <option value="opp_asc" {% if request.args.get('sort') == 'opp_asc' %}selected{% endif %}>Opponent ↑</option>
+        </select>
+      </form>
+    </div>
 
     <hr>
 
     {% for entry in games %}
-        <div class="game-entry">
-            <p>
-                <strong>{{ entry.game.game_date }}</strong> — {{ entry.game.matchup }} —
-                Result: {{ entry.game.wl }} —
-                PTS: {{ entry.game.pts }} : {{ entry.opp_pts }}
-            </p>
+        <div class="games-card">
+            <div class="games-info">
+    <!-- Drużyna główna -->
+    <div class="team team-left">
+        <img src="{{ team_logos[entry.game.team_abbreviation] }}" alt="{{ entry.game.team_name }} logo" class="teams-logo" />
+        <span class="teams-name">{{ entry.game.team_name }}</span>
+    </div>
 
-            <p>
+    <!-- Wynik -->
+    <div class="score">
+        <span class="team-score {% if entry.game.wl == 'W' %}win{% else %}lose{% endif %}">
+            {{ entry.game.pts }}
+        </span>
+        <span class="score-separator">-</span>
+        <span class="opp-score">{{ entry.opp_pts }}</span>
+    </div>
+
+    <!-- Drużyna przeciwna -->
+    <div class="team team-right">
+        {% set opponent_abbr = entry.game.matchup
+            .replace(entry.game.team_abbreviation, '')
+            .replace('vs.', '')
+            .replace('vs', '')
+            .replace('@', '')
+            .replace('.', '')
+            .strip()
+        %}
+        <span class="teams-name">{{ team_names.get(opponent_abbr, opponent_abbr) }}</span>
+        <img src="{{ team_logos[opponent_abbr] }}" alt="{{ team_names.get(opponent_abbr, opponent_abbr) }} logo" class="teams-logo" />
+    </div>
+</div>
+            <div class="game-meta">
+                <span>{{ entry.game.game_date }}</span> — Result: {{ entry.game.wl }}
+            </div>
+
+            <div class="mvp-info">
                 {% if entry.mvp %}
-                    MVP: <strong>{{ entry.mvp.player_name }}</strong>
-                    ({{ entry.mvp.team_abbreviation }}) —
-                    PTS: {{ entry.mvp.pts }},
-                    AST: {{ entry.mvp.ast }},
-                    REB: {{ entry.mvp.reb }},
-                    BLK: {{ entry.mvp.blk }}
+                    MVP: <strong>{{ entry.mvp.player_name }}</strong> ({{ entry.mvp.team_abbreviation }}) — 
+                    PTS: {{ entry.mvp.pts }}, AST: {{ entry.mvp.ast }}, REB: {{ entry.mvp.reb }}, BLK: {{ entry.mvp.blk }}
                 {% else %}
                     MVP: no data
                 {% endif %}
-            </p>
+            </div>
         </div>
     {% endfor %}
 

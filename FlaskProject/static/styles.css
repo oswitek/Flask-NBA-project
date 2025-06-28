@@ -733,7 +733,7 @@ input[type="text"]:focus {
 }
 
 .pagination {
-    margin-top: 20px;
+    margin-top: 24px;
     text-align: center;
     user-select: none;
     font-family: Arial, sans-serif;
@@ -746,27 +746,29 @@ input[type="text"]:focus {
 
 .page-btn {
     display: inline-block;
-    margin: 0 4px;
-    padding: 8px 14px;
-    border: 2px solid #007bff; /* niebieskie obramowanie */
-    border-radius: 6px;
-    color: #007bff;
+    margin: 0 6px;
+    padding: 8px 16px;
+    border: 2px solid #222; 
+    border-radius: 8px;
+    color: #fff; 
     text-decoration: none;
-    font-weight: 600;
-    cursor: pointer;
-    transition: background-color 0.3s, color 0.3s;
+    font-weight: 500;
+    background-color: #222; 
+    transition: background-color 0.25s ease, color 0.25s ease, border-color 0.25s ease;
+    transform: translateY(-8px);
 }
 
 .page-btn:hover {
-    background-color: #007bff;
-    color: white;
+    background-color: #444;
+    color: #fff;
+    border-color: #444;
 }
 
 .page-btn.active {
-    background-color: #0056b3;
-    color: white;
+    background-color: #f9f9f9; 
+    color: #444; 
+    border-color: #444; 
     cursor: default;
-    border-color: #0056b3;
 }
 /* --- Horizontal Scroll Section for Last Games --- */
 
@@ -861,4 +863,86 @@ button[type="submit"]:hover {
     color: var(
         --light-text
     ); /* Upewniamy się, że kolor tekstu się nie zmienia */
+}
+
+.score {
+    font-size: 28px;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+}
+   .team-score.win {
+            color: green;
+            font-weight: bold;
+        }
+        .team-score.lose {
+            color: red;
+            font-weight: bold;
+        }
+
+.score-separator {
+    margin: 0 10px;
+}
+.game-meta {
+    margin-top: 10px;
+    font-size: 14px;
+    color: #666;
+    text-align: center;
+}
+
+.mvp-info {
+    margin-top: 8px;
+    font-size: 14px;
+    text-align: center;
+}
+
+
+.teams-name {
+    font-weight: bold;
+    text-align: center;
+    margin-top: 5px;
+}
+.team {
+    width: 320px; 
+    padding: 0 15px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+.team-left {
+    justify-content: flex-start;
+    text-align: left;
+    flex: 1;
+}
+
+.team-right {
+    justify-content: flex-end;
+    text-align: right;
+    flex: 1;
+}
+.teams-logo {
+     width: 40px;
+    height: 40px;
+    flex-shrink: 0;
+}
+.games-card {
+   background-color: rgba(0, 0, 0, 0.2); 
+    backdrop-filter: blur(4px);
+    color: white;
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+     margin-bottom: 20px;
+}
+
+.games-info {
+     display: flex;
+    justify-content: space-between;
+    align-items: center;
+    text-align: center;
+    gap: 10px;
+    flex-wrap: wrap;
 }

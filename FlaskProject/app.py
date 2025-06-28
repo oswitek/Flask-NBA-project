@@ -90,8 +90,41 @@ SEASONS = {
     "2023-24": (date(2023, 8, 1), date(2024, 8, 1)),
 }
 
+
 @app.route('/team/<int:team_id>')
 def show_team_latest_games(team_id):
+    TEAM_NAMES = {
+    "ATL": "Atlanta Hawks",
+    "BOS": "Boston Celtics",
+    "BKN": "Brooklyn Nets",
+    "CHA": "Charlotte Hornets",
+    "CHI": "Chicago Bulls",
+    "CLE": "Cleveland Cavaliers",
+    "DAL": "Dallas Mavericks",
+    "DEN": "Denver Nuggets",
+    "DET": "Detroit Pistons",
+    "GSW": "Golden State Warriors",
+    "HOU": "Houston Rockets",
+    "IND": "Indiana Pacers",
+    "LAC": "Los Angeles Clippers",
+    "LAL": "Los Angeles Lakers",
+    "MEM": "Memphis Grizzlies",
+    "MIA": "Miami Heat",
+    "MIL": "Milwaukee Bucks",
+    "MIN": "Minnesota Timberwolves",
+    "NOP": "New Orleans Pelicans",
+    "NYK": "New York Knicks",
+    "OKC": "Oklahoma City Thunder",
+    "ORL": "Orlando Magic",
+    "PHI": "Philadelphia 76ers",
+    "PHX": "Phoenix Suns",
+    "POR": "Portland Trail Blazers",
+    "SAC": "Sacramento Kings",
+    "SAS": "San Antonio Spurs",
+    "TOR": "Toronto Raptors",
+    "UTA": "Utah Jazz",
+    "WAS": "Washington Wizards"
+}
     session = Session()
 
     season = request.args.get("season", "2023-24")
@@ -164,18 +197,20 @@ def show_team_latest_games(team_id):
             "opp_pts": opp_pts,
             "mvp": mvp
         })
-
+    team_logos = get_team_logos()
     session.close()
-
+    
     return render_template(
         "team_latest_games.html",
         games=games,
         team_id=team_id,
+        team_logos=team_logos,
         selected_season=season,
         seasons=SEASONS.keys(),
         current_page=current_page,
         total_pages=total_pages,
         per_page=per_page,
+        team_names=TEAM_NAMES  
     )
 
 if __name__ == '__main__':
