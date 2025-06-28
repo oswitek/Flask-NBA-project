@@ -15,29 +15,24 @@
 
 
     <h1>Team Games for Season {{ selected_season }}</h1>
+<div class="filters">
+  <form method="get" class="filters__form">
+    <select name="season" onchange="this.form.submit()">
+      {% for s in seasons %}
+        <option value="{{ s }}" {% if s == selected_season %}selected{% endif %}>{{ s }}</option>
+      {% endfor %}
+    </select>
 
-    <form method="get" style="display: flex; gap: 1rem; align-items: flex-end; margin-bottom: 1rem;">
-        <div>
-            <label for="season">Season:</label><br>
-            <select name="season" id="season" onchange="this.form.submit()">
-                {% for s in seasons %}
-                    <option value="{{ s }}" {% if s == selected_season %}selected{% endif %}>{{ s }}</option>
-                {% endfor %}
-            </select>
-        </div>
-
-        <div>
-            <label for="sort">Sort:</label><br>
-            <select name="sort" id="sort" onchange="this.form.submit()">
-                <option value="date_desc" {% if request.args.get('sort') == 'date_desc' %}selected{% endif %}>Date ↓</option>
-                <option value="date_asc" {% if request.args.get('sort') == 'date_asc' %}selected{% endif %}>Date ↑</option>
-                <option value="pts_desc" {% if request.args.get('sort') == 'pts_desc' %}selected{% endif %}>Points ↓</option>
-                <option value="pts_asc" {% if request.args.get('sort') == 'pts_asc' %}selected{% endif %}>Points ↑</option>
-                <option value="opp_desc" {% if request.args.get('sort') == 'opp_desc' %}selected{% endif %}>Opponent ↓</option>
-                <option value="opp_asc" {% if request.args.get('sort') == 'opp_asc' %}selected{% endif %}>Opponent ↑</option>
-            </select>
-        </div>
-    </form>
+    <select name="sort" onchange="this.form.submit()">
+      <option value="date_desc" {% if request.args.get('sort') == 'date_desc' %}selected{% endif %}>Date ↓</option>
+      <option value="date_asc" {% if request.args.get('sort') == 'date_asc' %}selected{% endif %}>Date ↑</option>
+      <option value="pts_desc" {% if request.args.get('sort') == 'pts_desc' %}selected{% endif %}>Points ↓</option>
+      <option value="pts_asc" {% if request.args.get('sort') == 'pts_asc' %}selected{% endif %}>Points ↑</option>
+      <option value="opp_desc" {% if request.args.get('sort') == 'opp_desc' %}selected{% endif %}>Opponent ↓</option>
+      <option value="opp_asc" {% if request.args.get('sort') == 'opp_asc' %}selected{% endif %}>Opponent ↑</option>
+    </select>
+  </form>
+</div>
 
     <hr>
 
