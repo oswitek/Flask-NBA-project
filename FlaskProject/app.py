@@ -88,6 +88,7 @@ SEASONS = {
     "2021-22": (date(2021, 8, 1), date(2022, 8, 1)),
     "2022-23": (date(2022, 8, 1), date(2023, 8, 1)),
     "2023-24": (date(2023, 8, 1), date(2024, 8, 1)),
+    "2024-25": (date(2024, 10, 1), date(2025, 6, 30)),
 }
 
 
@@ -127,7 +128,7 @@ def show_team_latest_games(team_id):
 }
     session = Session()
 
-    season = request.args.get("season", "2023-24")
+    season = request.args.get("season", "2024-25")
     start_date, end_date = SEASONS.get(season, SEASONS["2023-24"])
 
     try:
